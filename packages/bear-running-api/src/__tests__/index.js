@@ -1,1 +1,2 @@
-import './user'
+import './user-basicCRUD'
+import './user-permission'

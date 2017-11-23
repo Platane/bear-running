@@ -1,4 +1,9 @@
-export const assertType = (ctx, Type) => x => {
+import type { Context } from 'koa'
+
+export const assertType = (
+  ctx: Context,
+  Type: { assert: (o: any) => void }
+) => (x: any) => {
   try {
     Type.assert(x)
     return x

@@ -6,7 +6,10 @@ import initRoutes from './routes'
 
 import { PORT } from '~/config'
 
-const logError = err => console.error(err)
+const logError = err =>
+  process.env.NODE_ENV === 'test'
+    ? console.error('got error:', err.message)
+    : console.error(err)
 
 export const create_ = async () => {
   const app = new koa()

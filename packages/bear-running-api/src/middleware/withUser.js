@@ -11,6 +11,7 @@ export const withUser = () => async (ctx, next) => {
 
     ctx.user = {
       role: data['http://bear-running/role'],
+      id: data['http://bear-running/userId'],
     }
   } catch (e) {
     ctx.throw(401, 'Unauthorized')

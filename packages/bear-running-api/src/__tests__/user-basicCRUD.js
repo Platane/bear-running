@@ -3,7 +3,7 @@ import { wrap } from './util/server'
 import { createAdmin } from './util/client'
 import type { User } from 'types/User'
 
-let userId = null
+let userId = 'null'
 test('create a user', async t => {
   await wrap(async () => {
     const fetch = createAdmin()
