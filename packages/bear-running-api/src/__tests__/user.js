@@ -68,3 +68,22 @@ test('update a user', async t => {
 
   t.end()
 })
+
+test('remove a user', async t => {
+  await wrap(async () => {
+    const fetch = createAdmin()
+
+    await fetch(`/user/${userId}`, {
+      method: 'DELETE',
+    })
+
+    t.pass('request ok')
+
+    let error = null
+    await fetch(`/user/${userId}`).catch(x => (error = x))
+
+    t.assert(error, 'user is no longer retreivable')
+  })
+
+  t.end()
+})
