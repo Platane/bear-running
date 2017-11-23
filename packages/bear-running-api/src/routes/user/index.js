@@ -2,8 +2,7 @@ import { ObjectId } from 'mongodb'
 import { toMongoId, fromMongoId } from '~/util/id'
 import { assertType } from '~/util/assertType'
 import koaBody from 'koa-bodyparser'
-
-const parser = x => x
+import { withUser } from '~/middleware/withUser'
 
 type CreateUserInput = {|
   name: string,
@@ -14,28 +13,16 @@ type UpdateUserInput = {|
   picture?: string,
 |}
 
+const parse = x => ({ ...x, id: fromMongoId('user', x._id) })
+
 export default router => {
   // get user
-  router.get(
-    '/user/:user_id',
-    async (ctx, next) =>
-      (next.body = parse(
-        await ctx.db.collection('users').findOne({
-          _id: toMongoId(ctx.params.user_id),
-        })
-      ))
-  )
-
-  // get users
-  router.get(
-    '/user',
-    async (ctx, next) =>
-      (next.body = parse(
-        await ctx.db.collection('users').findOne({
-          _id: toMongoId(ctx.params.user_id),
-        })
-      ))
-  )
+  router.get('/user/:user_id', async (ctx, next) => {
+    const user = (next.body = await ctx.db.collection('users').findOne({
+      _id: toMongoId(ctx.params.user_id),
+    }))
+    ctx.body = parse(user)
+  })
 
   // create user
   router.post('/user', koaBody(), async (ctx, next) => {
@@ -43,12 +30,19 @@ export default router => {
 
     await ctx.db.collection('users').insertOne(user)
 
-    ctx.body = { ...user, id: fromMongoId('user', user._id) }
+    ctx.body = parse(user)
   })
 
   // update user
-  router.put('/user/:user_id', koaBody(), async (ctx, next) => {
+  router.put('/user/:user_id', koaBody(), withUser(), async (ctx, next) => {
     const user = assertType(ctx, UpdateUserInput)(ctx.request.body)
+
+    // check Authorization
+    if (
+      !['admin', 'userManager'].includes(ctx.user.role) &&
+      ctx.user.id !== ctx.params.user_id
+    )
+      ctx.throw(403, 'Forbidden')
 
     const { value } = await ctx.db.collection('users').findOneAndUpdate(
       {
@@ -57,6 +51,6 @@ export default router => {
       { $set: user }
     )
 
-    ctx.body = { ...value, id: ctx.params.user_id }
+    ctx.body = parse({ ...value, ...user })
   })
 }
