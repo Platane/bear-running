@@ -3,6 +3,7 @@ import { toMongoId, fromMongoId } from '~/util/id'
 import { assertType } from '~/util/assertType'
 import koaBody from 'koa-bodyparser'
 import { withUser } from '~/middleware/withUser'
+import type Router from 'koa-router'
 
 type CreateUserInput = {|
   name: string,
@@ -18,12 +19,12 @@ const parse = x => ({ ...x, id: fromMongoId('user', x._id) })
 export default router => {
   // get user
   router.get('/user/:user_id', async (ctx, next) => {
-    const user = (next.body = await ctx.db.collection('users').findOne({
+    const user = await ctx.db.collection('user').findOne({
       _id: toMongoId(ctx.params.user_id),
       deleted: false,
-    }))
+    })
 
-    if (!user) ctx.throw(404, 'Not Found')
+    if (!user) ctx.throw(404, 'User Not Found')
 
     ctx.body = parse(user)
   })
@@ -34,7 +35,7 @@ export default router => {
 
     const r = { ...user, deleted: false }
 
-    await ctx.db.collection('users').insertOne(r)
+    await ctx.db.collection('user').insertOne(r)
 
     ctx.body = parse(r)
   })
@@ -50,7 +51,7 @@ export default router => {
     )
       ctx.throw(403, 'Forbidden')
 
-    const { value } = await ctx.db.collection('users').findOneAndUpdate(
+    const { value } = await ctx.db.collection('user').findOneAndUpdate(
       {
         _id: toMongoId(ctx.params.user_id),
         deleted: false,
@@ -70,7 +71,7 @@ export default router => {
     )
       ctx.throw(403, 'Forbidden')
 
-    const { value } = await ctx.db.collection('users').findOneAndUpdate(
+    const { value } = await ctx.db.collection('user').findOneAndUpdate(
       {
         _id: toMongoId(ctx.params.user_id),
       },

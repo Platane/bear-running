@@ -1,2 +1,5 @@
+import './reset'
 import './user-basicCRUD'
 import './user-permission'
+import './run-basicCRUD'
+import './run-permission'

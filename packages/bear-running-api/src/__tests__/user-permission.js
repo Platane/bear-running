@@ -4,7 +4,7 @@ import { createAdmin, createUserManager, createUser } from './util/client'
 import type { User } from 'types/User'
 
 let userId = 'null'
-test('create a user', async t => {
+test('[bootstrap] create a user', async t => {
   await wrap(async () => {
     const fetch = createUser()
 
@@ -15,8 +15,6 @@ test('create a user', async t => {
         picture: 'tim.jpg',
       },
     })
-
-    t.pass('request ok')
 
     userId = res.id
   })

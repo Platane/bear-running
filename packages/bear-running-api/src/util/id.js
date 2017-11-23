@@ -4,8 +4,12 @@ import { ObjectId } from 'mongodb'
 // const encodeBase64 = x => x
 // const decodeBase64 = x => x
 
-export const toMongoId = (id: string) =>
-  ObjectId(decodeBase64(id).split('-')[1])
+export const toMongoId = (id: string) => {
+  const _id = decodeBase64(id)
+    .split('/')
+    .slice(-1)[0]
 
-export const fromMongoId = (collection: string, _id: string) =>
-  encodeBase64(collection + '-' + _id)
+  return ObjectId(_id)
+}
+
+export const fromMongoId = (...path: string[]) => encodeBase64(path.join('/'))
