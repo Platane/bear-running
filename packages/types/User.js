@@ -1,7 +1,7 @@
 export type User = {
-  id: String,
+  id: string,
 
-  picture: String,
+  picture: string,
 
-  name: String,
+  name: string,
 }

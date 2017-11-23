@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { JWT_PRIVATE_KEY } from '~/config'
+import type { Context } from 'koa'
 
-export const withUser = () => async (ctx, next) => {
+export const withUser = () => async (ctx: Context, next) => {
   const token =
     ctx.request.headers.authorization &&
     ctx.request.headers.authorization.replace('Bearer ', '')
