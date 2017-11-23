@@ -1,0 +1,18 @@
+[ignore]
+.*/node_modules/.*
+.*/storybook-static/.*
+.*/build/.*
+.*/dist/.*
+.*/asset/.*
+.*/webpack.config.babel.js
+.*/webpack.config.js
+.*/.storybook/.*
+
+[include]
+
+[libs]
+flow-typed
+
+[options]
+all=true
+module.name_mapper='^~/\(.*\)' -> '<PROJECT_ROOT>/src/\1'

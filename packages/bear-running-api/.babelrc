@@ -1,0 +1,47 @@
+{
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "~": "./src",
+          "types": "../types"
+        }
+      }
+    ],
+    [
+      "flow-runtime",
+      {
+        "assert": true,
+        "annotate": false
+      }
+    ],
+    "transform-object-rest-spread"
+  ],
+  "presets": [
+    "flow",
+    [
+      "env",
+      {
+        "targets": {
+          "node": "8.7"
+        }
+      }
+    ]
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        [
+          "module-resolver",
+          {
+            "alias": {
+              "~": "./src",
+              "types": "./src/types"
+            }
+          }
+        ]
+      ]
+    }
+  }
+}
