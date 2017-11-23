@@ -1,5 +1,5 @@
-import { ObjectId } from 'mongodb'
 import { toMongoId, fromMongoId } from '~/util/id'
+import { parse } from './parse'
 import { assertType } from '~/util/assertType'
 import koaBody from 'koa-bodyparser'
 import { withUser } from '~/middleware/withUser'
@@ -12,11 +12,6 @@ type CreateRunInput = {|
 type UpdateRunInput = {|
   steps?: Step[],
 |}
-
-const parse = x => ({
-  ...x,
-  id: fromMongoId('user', x._user_id, 'runs', x._id),
-})
 
 export default router => {
   // get run
@@ -57,6 +52,7 @@ export default router => {
 
       // insert
       const r = { ...run, user_id, _user_id, deleted: false }
+      r.date_start = run.steps[0].date
 
       await ctx.db.collection('run').insertOne(r)
 
@@ -81,6 +77,8 @@ export default router => {
       // check Authorization
       if (!['admin'].includes(ctx.user.role) && ctx.user.id !== runOld.user_id)
         ctx.throw(403, 'Forbidden')
+
+      if (runInput.steps) runInput.date_start = runInput.steps[0].date
 
       const { value } = await ctx.db.collection('run').findOneAndUpdate(
         {

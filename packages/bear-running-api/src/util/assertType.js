@@ -9,6 +9,6 @@ export const assertType = (
     return x
   } catch (err) {
     ctx.throw(400, err.message)
-    return false
+    throw new Error('type Error')
   }
 }

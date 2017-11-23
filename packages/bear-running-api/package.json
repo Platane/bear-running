@@ -38,8 +38,9 @@
     "install:flow-typed": "flow-typed install",
     "start:dev": "nodemon start.js",
     "start": "node -e \"require('./lib').create()\"",
+    "now-build": "echo 1",
     "build":
-      "rm -rf lib && NODE_ENV=production babel --out-dir ./lib --ignore __tests__ ./src",
+      "rm -rf src/types && cp -rf ../types src/types && rm -rf lib && NODE_ENV=production babel --out-dir ./lib --ignore __tests__ ./src && rm -rf src/types",
     "test":
       "rm -rf src/types && cp -rf ../types src/types && env NODE_ENV=test env PORT=9988 env JWT_PRIVATE_KEY=1234 node -e \"require('babel-register');require('./src/__tests__')\"| tap-spec && rm -rf src/types",
     "deploy:production":

@@ -1,4 +1,5 @@
-import user from './user'
-import run from './run'
+import userCrud from './user/crud'
+import runCrud from './run/crud'
+import runSearch from './run/search'
 
-export default router => [user, run].forEach(f => f(router))
+export default router => [userCrud, runCrud, runSearch].forEach(f => f(router))

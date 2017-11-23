@@ -42,6 +42,19 @@
           }
         ]
       ]
+    },
+    "production": {
+      "plugins": [
+        [
+          "module-resolver",
+          {
+            "alias": {
+              "~": "./src",
+              "types": "./src/types"
+            }
+          }
+        ]
+      ]
     }
   }
 }

@@ -3,6 +3,7 @@ import { toMongoId, fromMongoId } from '~/util/id'
 import { assertType } from '~/util/assertType'
 import koaBody from 'koa-bodyparser'
 import { withUser } from '~/middleware/withUser'
+import { parse } from './parse'
 import type Router from 'koa-router'
 
 type CreateUserInput = {|
@@ -13,8 +14,6 @@ type UpdateUserInput = {|
   name?: string,
   picture?: string,
 |}
-
-const parse = x => ({ ...x, id: fromMongoId('user', x._id) })
 
 export default router => {
   // get user

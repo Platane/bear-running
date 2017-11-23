@@ -5,6 +5,8 @@
 deployed on now
 
 ```
+yarn run test
+yarn run build
 yarn run deploy:production
 ```
 

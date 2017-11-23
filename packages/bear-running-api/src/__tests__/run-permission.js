@@ -1,7 +1,6 @@
 import test from 'tape'
 import { wrap } from './util/server'
 import { createAdmin, createUserManager, createUser } from './util/client'
-import type { User } from 'types/User'
 
 let userId = 'null'
 let runId = 'null'
