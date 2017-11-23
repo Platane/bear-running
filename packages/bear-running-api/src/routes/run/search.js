@@ -31,22 +31,33 @@ export default router => {
       ctx.request.query.orderBy || '-date_start'
     )
     let offset = 0
+    let date_start_min = ctx.request.query.date_start_min || null
+    let date_start_max = ctx.request.query.date_start_max || null
 
     if (ctx.request.query.cursor) {
       const x = JSON.parse(decodeBase64(ctx.request.query.cursor))
       offset = x.offset
       orderBy = x.orderBy
+      date_start_min = x.date_start_min
+      date_start_max = x.date_start_max
     }
 
     const orderProp = orderBy.replace(/^\-/, '')
     const orderDesc = orderBy[0] === '-' ? -1 : 1
 
+    const query = {
+      deleted: false,
+      _user_id: toMongoId(ctx.params.user_id),
+    }
+    if (date_start_min)
+      query.date_start = { ...(query.date_start || {}), $gte: +date_start_min }
+
+    if (date_start_max)
+      query.date_start = { ...(query.date_start || {}), $lt: +date_start_max }
+
     const runs = await ctx.db
       .collection('run')
-      .find({
-        deleted: false,
-        _user_id: toMongoId(ctx.params.user_id),
-      })
+      .find(query)
       .skip(offset)
       .sort([[orderProp, orderDesc]])
       .limit(limit)

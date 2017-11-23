@@ -109,3 +109,21 @@ test('get all runs for a user by date acsending', async t => {
 
   t.end()
 })
+
+test('get all runs between min and max date', async t => {
+  await wrap(async () => {
+    const fetch = createAdmin()
+
+    const res = await fetch(
+      `/user/${userId}/run?date_start_min=0.5&date_start_max=1.5`
+    )
+
+    t.pass('requests ok')
+
+    t.equal(res.items.length, 1, 'should return 1 item')
+
+    t.equal(res.items[0].steps[0].date, 1, 'date should be between extrema')
+  })
+
+  t.end()
+})
