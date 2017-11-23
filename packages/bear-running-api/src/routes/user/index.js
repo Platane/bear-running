@@ -9,6 +9,10 @@ type CreateUserInput = {|
   name: string,
   picture: string,
 |}
+type UpdateUserInput = {|
+  name?: string,
+  picture?: string,
+|}
 
 export default router => {
   // get user
@@ -39,6 +43,20 @@ export default router => {
 
     await ctx.db.collection('users').insertOne(user)
 
-    ctx.body = { ...user, id: fromMongoId(user.id) }
+    ctx.body = { ...user, id: fromMongoId('user', user._id) }
+  })
+
+  // update user
+  router.put('/user/:user_id', koaBody(), async (ctx, next) => {
+    const user = assertType(ctx, UpdateUserInput)(ctx.request.body)
+
+    const { value } = await ctx.db.collection('users').findOneAndUpdate(
+      {
+        _id: toMongoId(ctx.params.user_id),
+      },
+      { $set: user }
+    )
+
+    ctx.body = { ...value, id: ctx.params.user_id }
   })
 }
