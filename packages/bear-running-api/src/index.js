@@ -3,6 +3,7 @@ import koaRouter from 'koa-router'
 import koaCors from 'koa-cors'
 import { connect as createDB } from '~/service/mongo'
 import initRoutes from './routes'
+import { createToken } from '~/util/token'
 
 import { PORT } from '~/config'
 
@@ -36,6 +37,7 @@ export const create_ = async () => {
   const server = app.listen(PORT)
 
   console.log(`server listening on port ${PORT}`)
+  console.log(`admin token : ${createToken('admin')()}`)
 
   // kill server
   return () => {

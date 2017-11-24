@@ -17,4 +17,5 @@ now login
 [...]
 
 now secret add mongo_pass <mongo_pass>
+now secret add jwt_private_key <jwt_private_key>
 ```
