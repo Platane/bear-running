@@ -10,7 +10,6 @@ export const createClient = (role: Role) => (userId?: string) => (
   url: string,
   options: * = {}
 ) =>
-  console.log(role, createToken(role)()) ||
   fetch(endpoint + url, {
     ...options,
     body: options.body && JSON.stringify(options.body),
