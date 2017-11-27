@@ -1,4 +1,9 @@
-import { pushToCache, getResource, getQuery } from '~/service/resource'
+import {
+  pushToCache,
+  isResourceLoaded,
+  getResource,
+  getQuery,
+} from '~/service/resource'
 import { set, merge } from '~/util/reduxHelper'
 
 import type { State } from './type'
@@ -15,11 +20,7 @@ export const reduce = (state: State, action): State => {
     case 'resource:require': {
       const { key, query, path, limit } = action
 
-      const r = getResource(state.cache, path, query)
-
-      const fetched = path.split('/').length % 2 === 0 ? r : r.length >= limit
-
-      if (!fetched)
+      if (!isResourceLoaded(state.cache, path, query))
         return {
           ...state,
           toFetch: [

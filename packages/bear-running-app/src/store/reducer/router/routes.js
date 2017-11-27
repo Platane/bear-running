@@ -5,5 +5,8 @@ export const routes: Route[] = [
 
   { path: '/currentRun', key: 'currentRun' },
   { path: '/run', key: 'myRuns' },
+
+  { path: '/admin/user', key: 'adminUserList' },
+  { path: '/admin/user/:userId', key: 'adminUser' },
   // { path: '/run/:runId', key: 'myRun' },
 ]

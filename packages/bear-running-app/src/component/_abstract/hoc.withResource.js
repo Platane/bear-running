@@ -1,5 +1,5 @@
 import { h, Component } from 'preact'
-import { selectResource } from '~/store/selector/resource'
+import { selectResource, selectResourceLoaded } from '~/store/selector/resource'
 import { requireResource } from '~/store/action/resource'
 
 const toPropsDefault = x => x
@@ -12,27 +12,35 @@ export const withResource = options => C =>
       const x = options.getResource && options.getResource(props)
 
       if (x && x.path !== this.state.path) {
-        const resource = selectResource(x.path, x.query)(
-          this.context.store.getState()
-        )
+        const state = this.context.store.getState()
+
+        const resource = selectResource(x.path, x.query)(state)
+
+        const loaded = selectResourceLoaded(x.path, x.query)(state)
 
         this.setState({
           path: x.path,
           query: x.query,
           resource,
+          loaded,
         })
 
-        if (!resource)
+        if (!loaded)
           this.context.store.dispatch(requireResource(x.path, x.query))
       }
     }
 
     _storeUpdate = () => {
-      const resource = selectResource(this.state.path, this.state.query)(
-        this.context.store.getState()
-      )
+      const { path, query } = this.state
 
-      if (resource !== this.state.resource) this.setState({ resource })
+      const state = this.context.store.getState()
+
+      const resource = selectResource(path, query)(state)
+
+      const loaded = selectResourceLoaded(path, query)(state)
+
+      if (resource !== this.state.resource || loaded !== this.state.loaded)
+        this.setState({ resource, loaded })
     }
 
     componentDidMount() {

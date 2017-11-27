@@ -1,5 +1,5 @@
 import { set, merge } from '~/util/reduxHelper'
-import { removeDupId } from '~/util/array'
+import { removeDup } from '~/util/array'
 
 const queryToKey = query =>
   '{' +
@@ -41,6 +41,34 @@ export const getResource = (cache, resourcePath, resourceQuery = {}) => {
   }
 }
 
+export const isResourceLoaded = (
+  cache,
+  resourcePath,
+  resourceQuery = {},
+  limit = 1
+) => {
+  const { entities, queries } = cache
+
+  const path = resourcePath.split('/')
+  const entityName = getEnrityName(resourcePath)
+
+  if (path.length % 2 === 0) {
+    // one unique entity
+
+    const id = path[path.length - 1]
+
+    return (entities[entityName] || {})[id]
+  } else {
+    // multiple entities
+
+    const key = resourceToKey(resourcePath, resourceQuery)
+
+    return queries[key]
+      ? queries[key].items.length >= limit && !queries[key].nextCursor
+      : false
+  }
+}
+
 export const getQuery = (cache, resourcePath, resourceQuery = {}) => {
   const { queries } = cache
 
@@ -76,7 +104,7 @@ export const pushToCache = (cache, resourcePath, resourceQuery, res) => {
 
     const key = resourceToKey(resourcePath, resourceQuery)
 
-    const items = removeDupId([
+    const items = removeDup([
       ...(cache.queries[key] ? cache.queries[key].items : []),
       ...res.items.map(x => x.id),
     ])
