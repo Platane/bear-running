@@ -64,7 +64,7 @@ export const reduce = (state: State, action): State => {
 
       break
 
-    case 'logout':
+    case 'auth:logout':
       return { ...state, token: null }
   }
 
