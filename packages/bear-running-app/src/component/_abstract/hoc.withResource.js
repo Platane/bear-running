@@ -12,15 +12,18 @@ export const withResource = options => C =>
       const x = options.getResource && options.getResource(props)
 
       if (x && x.path !== this.state.path) {
+        const resource = selectResource(x.path, x.query)(
+          this.context.store.getState()
+        )
+
         this.setState({
           path: x.path,
           query: x.query,
-          resource: selectResource(x.path, x.query)(
-            this.context.store.getState()
-          ),
+          resource,
         })
 
-        this.context.store.dispatch(requireResource(x.path, x.query))
+        if (!resource)
+          this.context.store.dispatch(requireResource(x.path, x.query))
       }
     }
 

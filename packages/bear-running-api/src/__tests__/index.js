@@ -1,6 +1,7 @@
 import './reset'
 import './user-basicCRUD'
 import './user-permission'
+import './user-search'
 import './run-basicCRUD'
 import './run-permission'
 import './run-search'

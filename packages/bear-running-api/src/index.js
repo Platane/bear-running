@@ -36,8 +36,8 @@ export const create_ = async () => {
 
   const server = app.listen(PORT)
 
-  console.log(`server listening on port ${PORT}`)
-  console.log(`admin token : ${createToken('admin')()}`)
+  // console.log(`server listening on port ${PORT}`)
+  // console.log(`admin token : ${createToken('admin')()}`)
 
   // kill server
   return () => {

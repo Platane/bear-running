@@ -32,7 +32,7 @@ export default router => {
   router.post('/user', koaBody(), async (ctx, next) => {
     const user = assertType(ctx, CreateUserInput)(ctx.request.body)
 
-    const r = { ...user, deleted: false }
+    const r = { ...user, deleted: false, date_created: Date.now() }
 
     await ctx.db.collection('user').insertOne(r)
 
