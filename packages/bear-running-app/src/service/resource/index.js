@@ -1,4 +1,5 @@
 import { set, merge } from '~/util/reduxHelper'
+import { removeDupId } from '~/util/array'
 
 const queryToKey = query =>
   '{' +
@@ -75,10 +76,10 @@ export const pushToCache = (cache, resourcePath, resourceQuery, res) => {
 
     const key = resourceToKey(resourcePath, resourceQuery)
 
-    const items = [
+    const items = removeDupId([
       ...(cache.queries[key] ? cache.queries[key].items : []),
       ...res.items.map(x => x.id),
-    ]
+    ])
 
     const query = {
       items,
