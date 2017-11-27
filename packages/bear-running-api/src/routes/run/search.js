@@ -4,6 +4,7 @@ import { encodeBase64, decodeBase64 } from '~/util/base64'
 import { assertType } from '~/util/assertType'
 import koaBody from 'koa-bodyparser'
 import { withUser } from '~/middleware/withUser'
+import { parse } from './parse'
 import type Router from 'koa-router'
 import type { Step } from 'types/Run'
 
@@ -13,11 +14,6 @@ type CreateRunInput = {|
 type UpdateRunInput = {|
   steps?: Step[],
 |}
-
-const parse = x => ({
-  ...x,
-  id: fromMongoId('user', x._user_id, 'runs', x._id),
-})
 
 type OrderBy = 'date_start' | '-date_start'
 
