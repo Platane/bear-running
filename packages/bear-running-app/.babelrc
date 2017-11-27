@@ -6,7 +6,8 @@
       {
         "alias": {
           "~": "./src",
-          "types": "../types"
+          "types": "../types",
+          "api": "./api-build"
         }
       }
     ],
