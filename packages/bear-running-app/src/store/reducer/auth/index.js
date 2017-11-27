@@ -38,7 +38,7 @@ export const reduce = (state: State, action): State => {
         }
       }
 
-      state = { ...state, haveReadFormStorage: true }
+      state = { ...state }
 
       break
 
