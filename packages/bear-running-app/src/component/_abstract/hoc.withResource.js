@@ -33,6 +33,8 @@ export const withResource = options => C =>
     _storeUpdate = () => {
       const { path, query } = this.state
 
+      if (!path) return
+
       const state = this.context.store.getState()
 
       const resource = selectResource(path, query)(state)
