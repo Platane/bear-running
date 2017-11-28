@@ -53,6 +53,30 @@ export const isResourceLoaded = (
   }
 }
 
+export const haveMoreResource = (
+  cache: Cache,
+  resourcePath: String,
+  resourceQuery?: Object = {}
+) => {
+  const { entities, queries } = cache
+
+  const entityName = getEntityName(resourcePath)
+
+  if (!isList(resourcePath)) {
+    // one unique entity
+
+    const id = resourcePath.split('/').slice(-1)[0]
+
+    return !(entities[entityName] || {})[id]
+  } else {
+    // multiple entities
+
+    const key = resourceToKey(resourcePath, resourceQuery)
+
+    return queries[key] ? queries[key].nextCursor : true
+  }
+}
+
 export const getQuery = (
   { queries }: Cache,
   resourcePath: String,

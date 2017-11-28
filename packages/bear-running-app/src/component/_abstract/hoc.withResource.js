@@ -1,12 +1,40 @@
 import { h, Component } from 'preact'
-import { selectResource, selectResourceLoaded } from '~/store/selector/resource'
+import {
+  selectResource,
+  selectResourceLoaded,
+  selectResourceHaveMore,
+} from '~/store/selector/resource'
 import { requireResource } from '~/store/action/resource'
 
 const toPropsDefault = x => x
 
-export const withResource = options => C =>
+const batchSizeDefault = 16
+
+export const withResource = (options = {}) => C =>
   class WithResource extends Component {
-    state = { path: null, query: null, resource: null }
+    state = { path: null, query: null, resource: null, limit: 0 }
+
+    loadMore = () => {
+      const limit = this.state.limit + (options.batchSize || batchSizeDefault)
+
+      const { path, query } = this.state
+
+      if (path) {
+        const state = this.context.store.getState()
+        const resource = selectResource(x.path, x.query, limit)(state)
+        const loaded = selectResourceLoaded(x.path, x.query, limit)(state)
+        const haveMore = selectResourceHaveMore(x.path, x.query, limit)(state)
+
+        this.setState({
+          resource,
+          loaded,
+          haveMore,
+          limit,
+        })
+
+        this.context.store.dispatch(requireResource(path, query, limit))
+      }
+    }
 
     _propsUpdate(props) {
       const x = options.getResource && options.getResource(props)
@@ -17,40 +45,46 @@ export const withResource = options => C =>
           query: null,
           resource: null,
           loaded: true,
+          limit: 0,
         })
 
       if (x && x.path !== this.state.path) {
+        const limit = options.batchSize || batchSizeDefault
+
         const state = this.context.store.getState()
-
-        const resource = selectResource(x.path, x.query)(state)
-
-        const loaded = selectResourceLoaded(x.path, x.query)(state)
+        const resource = selectResource(x.path, x.query, limit)(state)
+        const loaded = selectResourceLoaded(x.path, x.query, limit)(state)
+        const haveMore = selectResourceHaveMore(x.path, x.query, limit)(state)
 
         this.setState({
           path: x.path,
           query: x.query,
           resource,
           loaded,
+          limit,
         })
 
         if (!loaded)
-          this.context.store.dispatch(requireResource(x.path, x.query))
+          this.context.store.dispatch(requireResource(x.path, x.query, limit))
       }
     }
 
     _storeUpdate = () => {
-      const { path, query } = this.state
+      const { path, query, limit } = this.state
 
       if (!path) return
 
       const state = this.context.store.getState()
+      const resource = selectResource(path, query, limit)(state)
+      const loaded = selectResourceLoaded(path, query, limit)(state)
+      const haveMore = selectResourceHaveMore(path, query, limit)(state)
 
-      const resource = selectResource(path, query)(state)
-
-      const loaded = selectResourceLoaded(path, query)(state)
-
-      if (resource !== this.state.resource || loaded !== this.state.loaded)
-        this.setState({ resource, loaded })
+      if (
+        resource !== this.state.resource ||
+        loaded !== this.state.loaded ||
+        haveMore !== this.state.haveMore
+      )
+        this.setState({ resource, loaded, haveMore })
     }
 
     componentDidMount() {
@@ -69,6 +103,7 @@ export const withResource = options => C =>
     render(props, state) {
       return (
         <C
+          loadMore={this.loadMore}
           {...props}
           {...state}
           {...(options.toProps || toPropsDefault)(this.state)}

@@ -10,7 +10,11 @@ const injectState = connect(null, {
 
 const injectData = withResource({
   getResource: state => ({ path: `user` }),
-  toProps: ({ resource, loaded }) => ({ users: resource || [], loaded }),
+  toProps: ({ resource, loaded, haveMore }) => ({
+    users: resource || [],
+    loaded,
+    haveMore,
+  }),
 })
 
 export const UserList = injectState(injectData(Dumb))

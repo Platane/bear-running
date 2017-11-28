@@ -6,7 +6,13 @@ const createChangeRole = (updateUserRole, userId) => e =>
 
 const createRemoveUser = (removeUser, userId) => () => removeUser(userId)
 
-export const UserList = ({ users, updateUserRole, removeUser }) => (
+export const UserList = ({
+  users,
+  haveMore,
+  loadMore,
+  updateUserRole,
+  removeUser,
+}) => (
   <table>
     {users.map(user => (
       <tr key={user.id}>
@@ -37,5 +43,6 @@ export const UserList = ({ users, updateUserRole, removeUser }) => (
         </th>
       </tr>
     ))}
+    {haveMore && <button onClick={loadMore}>load more</button>}
   </table>
 )
