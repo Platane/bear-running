@@ -26,7 +26,7 @@ export const reduce = (state: State, action): State => {
       }
 
     case 'run:end':
-      return { running: false }
+      return { ...state, running: false }
   }
 
   return state

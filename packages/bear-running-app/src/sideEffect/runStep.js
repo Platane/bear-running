@@ -13,49 +13,44 @@ const watchPosition = fn => {
 const getPosition = () =>
   new Promise((resolve, reject) => {
     try {
-      navigator.geolocation.getPosition(resolve, reject)
+      navigator.geolocation.getCurrentPosition(resolve, reject)
     } catch (err) {
       reject(err)
     }
   })
 
-const DELAY = 5000
+const toStep = ({ coords }) => ({
+  geoloc: { lat: coords.latitude, lng: coords.longitude },
+  date: Date.now(),
+})
+
+const DELAY = 2000
 
 export const init = store => {
-  let lastStep = null
-  let watching = null
   let loopTimeout = null
+  let watching = false
 
   // called once each Xms
-  const loop = () => {
-    if (lastStep) store.dispatch(step(lastStep))
+  const loop = async () => {
+    store.dispatch(step(toStep(await getPosition())))
 
     clearTimeout(loopTimeout)
     loopTimeout = setTimeout(loop, DELAY)
   }
-
-  // called with the navigator geolocation watch callback
-  const updateStep = ({ coords }) =>
-    (lastStep = {
-      geoloc: { lat: coords.latitude, lng: coords.longitude },
-      date: Date.now(),
-    })
 
   // called on state update
   const update = () => {
     const { running } = store.getState().addRun
 
     if (running && !watching) {
-      watching = watchPosition(updateStep)
-      loopTimeout = setTimeout(loop, 10)
+      watching = true
+      loop()
     }
 
     if (!running && watching) {
-      watching()
       clearTimeout(loopTimeout)
       loopTimeout = null
-      lastStep = null
-      watching = null
+      watching = false
     }
   }
 
