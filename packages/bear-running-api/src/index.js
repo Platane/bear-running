@@ -27,7 +27,7 @@ export const create_ = async () => {
     koaCors({
       origin: '*',
       headers: ['Authorization', 'Content-Type'],
-      methods: ['GET', 'POST', 'UPDATE', 'DELETE'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     })
   )
   app.use(router.routes())
