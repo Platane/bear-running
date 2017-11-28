@@ -65,7 +65,7 @@ export const reduce = (state: State, action): State => {
       break
 
     case 'auth:logout':
-      return { ...state, token: null }
+      return { ...state, token: null, user: null }
   }
 
   return state

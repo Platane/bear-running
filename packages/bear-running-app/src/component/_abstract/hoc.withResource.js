@@ -11,6 +11,14 @@ export const withResource = options => C =>
     _propsUpdate(props) {
       const x = options.getResource && options.getResource(props)
 
+      if (!x && this.state.path)
+        this.setState({
+          path: null,
+          query: null,
+          resource: null,
+          loaded: true,
+        })
+
       if (x && x.path !== this.state.path) {
         const state = this.context.store.getState()
 
