@@ -1,9 +1,12 @@
 import { h, Component } from 'preact'
 import { BasicLayout } from '~/component/_layout/Basic'
+import { CurrentRun } from '~/component/_page/CurrentRun'
 import { UserList as AdminUserList } from '~/component/_page/Admin/UserList'
 
 const BasicApp = ({ routerKey, routerParam }) => {
   switch (routerKey) {
+    case 'currentRun':
+      return <CurrentRun />
     default:
       return null
   }
