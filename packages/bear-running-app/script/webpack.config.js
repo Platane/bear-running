@@ -1,6 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
 const Visualizer = require('webpack-visualizer-plugin')
+const WebpackAssetsManifest = require('webpack-assets-manifest')
+const BabiliPlugin = require('babili-webpack-plugin')
 
 const production = 'production' === process.env.NODE_ENV
 
@@ -15,12 +17,17 @@ const createEnvVarArray = () => {
 
 module.exports = {
   entry: {
-    app: ['./src/index.js', './src/index.html'],
+    app: [
+      path.join(__dirname, '../src/index.js'),
+      path.join(__dirname, '../src/index.html'),
+    ],
   },
 
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, '../dist'),
     filename: production ? '[hash:6].js' : '[name].js',
+    chunkFilename: 'static/[hash:8].[name].js',
+    publicPath: '/',
   },
 
   resolve: {
@@ -68,7 +75,9 @@ module.exports = {
   },
 
   plugins: [
-    new Visualizer(),
+    // this will produce a huge file, which now will refuse to process,
+    // use for debug only
+    false && new Visualizer(),
 
     !production && new webpack.NamedModulesPlugin(),
 
@@ -77,10 +86,17 @@ module.exports = {
     production && new webpack.optimize.ModuleConcatenationPlugin(),
 
     production &&
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: false,
-        comments: false,
-      }),
+      new BabiliPlugin(
+        {},
+        {
+          sourceMap: false,
+          comments: false,
+        }
+      ),
+
+    new WebpackAssetsManifest({
+      output: path.resolve(__dirname, '../dist', 'assetManifest.json'),
+    }),
   ].filter(Boolean),
 
   devtool: 'source-map',

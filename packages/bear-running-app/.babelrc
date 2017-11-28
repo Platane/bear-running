@@ -16,5 +16,36 @@
     "transform-es2015-modules-commonjs",
     "transform-object-rest-spread",
     "styled-jsx/babel"
-  ]
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        [
+          "module-resolver",
+          {
+            "alias": {
+              "~": "./src",
+              "types": "../types"
+            }
+          }
+        ],
+        ["transform-react-jsx", { "pragma": "h" }],
+        "transform-class-properties",
+        "transform-es2015-modules-commonjs",
+        "transform-object-rest-spread",
+        "styled-jsx/babel"
+      ],
+      "presets": [
+        "flow",
+        [
+          "env",
+          {
+            "targets": {
+              "browsers": ["last 2 Chrome versions", "last 2 Firefox versions"]
+            }
+          }
+        ]
+      ]
+    }
+  }
 }
