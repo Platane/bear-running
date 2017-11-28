@@ -5,6 +5,7 @@ import {
   getQuery,
 } from '~/service/resource'
 import { set, merge } from '~/util/reduxHelper'
+import { getHandler } from '~/store/middleware/api'
 
 import type { State } from './type'
 
@@ -38,6 +39,26 @@ export const reduce = (state: State, action): State => {
         ['cache'],
         pushToCache(state.cache, action.path, action.query, action.res)
       )
+
+    // case 'mutation:start':
+    //   return {
+    //     ...state,
+    //     cache: getHandler(action.action).optimisticUpdate(
+    //       state.cache,
+    //       action.action,
+    //       action.res
+    //     ),
+    //   }
+
+    case 'mutation:success':
+      return {
+        ...state,
+        cache: getHandler(action.action).update(
+          state.cache,
+          action.action,
+          action.res
+        ),
+      }
   }
 
   return state

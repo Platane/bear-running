@@ -1,17 +1,5 @@
-import { API_URL } from '~/config'
-import { stringify } from 'querystring'
 import { selectToken } from '~/store/selector/token'
-
-console.log('API_URL', API_URL)
-
-const _fetch = (token, path, query = {}) =>
-  fetch(`${API_URL}/${path}?${stringify(query)}`, {
-    headers: { Authorization: `Bearer ${token || 'anonym'}` },
-  }).then(async res => {
-    if (!res.ok) throw Error(`${res.status} - ${await res.text()}`)
-
-    return res.json()
-  })
+import fetch from '~/service/fetch'
 
 export const init = store => {
   const pending = {}
@@ -25,7 +13,7 @@ export const init = store => {
 
     pending[next.key] = true
 
-    _fetch(selectToken(state), next.path, next.query)
+    fetch(selectToken(state), next.path, { query: next.query })
       .then(res => store.dispatch({ type: 'resource:fetched', ...next, res }))
       .catch(err => console.error(err))
 

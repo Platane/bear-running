@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
-
+import { middleware as middlewareAPI } from './middleware/api'
 import { error } from '~/util/reporter'
 
 import { reduce, defaultState } from './reducer'
@@ -14,7 +14,7 @@ const crashReporterMiddleware = store => next => action => {
 }
 
 export const create = (sideEffects = []) => {
-  const middlewares = [crashReporterMiddleware]
+  const middlewares = [crashReporterMiddleware, middlewareAPI]
 
   // enhancers composing
   const enhancers = [
