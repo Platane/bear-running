@@ -1,4 +1,5 @@
 import './reset'
+import './user-role'
 import './user-basicCRUD'
 import './user-permission'
 import './user-search'
