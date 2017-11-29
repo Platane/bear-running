@@ -11,6 +11,7 @@ import type { State } from './type'
 
 export const defaultState = {
   toFetch: [],
+  optimisticBackups: {},
   cache: { entities: {}, queries: {} },
 }
 
@@ -40,25 +41,65 @@ export const reduce = (state: State, action): State => {
         pushToCache(state.cache, action.path, action.query, action.res)
       )
 
-    // case 'mutation:start':
-    //   return {
-    //     ...state,
-    //     cache: getHandler(action.action).optimisticUpdate(
-    //       state.cache,
-    //       action.action,
-    //       action.res
-    //     ),
-    //   }
+    case 'mutation:start': {
+      const handler = getHandler(action.action)
 
-    case 'mutation:success':
+      // the mutation can alter the state before the api return
+      if (handler.optimisticUpdate) {
+        // alter the state
+        const cache = handler.optimisticUpdate(state.cache, action.action)
+
+        // set up a rollback point, in case the request fails
+        const optimisticBackups = {
+          ...state.optimisticBackups,
+          [action.key]: state.cache,
+        }
+
+        return {
+          ...state,
+          cache,
+          optimisticBackups,
+        }
+      }
+    }
+
+    case 'mutation:success': {
+      // remove the optimisticBackups ( if exist )
+      let optimisticBackups = state.optimisticBackups
+      if (optimisticBackups[action.key]) {
+        optimisticBackups = { ...optimisticBackups }
+        delete optimisticBackups[action.key]
+      }
+
+      // alter the state
+      const cache = getHandler(action.action).update(
+        state.cache,
+        action.action,
+        action.res
+      )
+
       return {
         ...state,
-        cache: getHandler(action.action).update(
-          state.cache,
-          action.action,
-          action.res
-        ),
+        cache,
+        optimisticBackups,
       }
+    }
+
+    case 'mutation:error': {
+      // rollback the cache ( if exists )
+      if (state.optimisticBackups[action.key]) {
+        const cache = state.optimisticBackups[action.key]
+
+        const optimisticBackups = { ...state.optimisticBackups }
+        delete optimisticBackups[action.key]
+
+        return {
+          ...state,
+          cache,
+          optimisticBackups,
+        }
+      }
+    }
   }
 
   return state

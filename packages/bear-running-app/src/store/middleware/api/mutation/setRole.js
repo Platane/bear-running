@@ -5,7 +5,7 @@ import fetch from '~/service/fetch'
 export const actionType = 'mutation:updateUserRole'
 
 export const optimisticUpdate = (cache, action) =>
-  set(cache, ['entities', 'user', res.id, 'role'], action.role)
+  set(cache, ['entities', 'user', action.userId, 'role'], action.role)
 
 export const update = (cache, action, res) =>
   set(cache, ['entities', 'user', res.id], res)
