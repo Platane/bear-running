@@ -1,13 +1,13 @@
 import { h, Component } from 'preact'
 import { Link } from '~/component/Link'
 
-export const Header = ({ user, login, logout }) => (
+export const Header = ({ userId, user, login, logout }) => (
   <header>
     <Link href="currentRun"> current run </Link>
 
     <Link href="run"> my run </Link>
 
-    {!user && (
+    {!userId && (
       <a href="#" onClick={login}>
         login
       </a>
@@ -15,7 +15,7 @@ export const Header = ({ user, login, logout }) => (
 
     {user && <span>{user.name}</span>}
 
-    {user && (
+    {userId && (
       <a href="#" onClick={logout}>
         logout
       </a>
