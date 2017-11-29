@@ -6,6 +6,8 @@ const origin = {
 }
 
 export const register = delay => fn => {
+  delay = 800
+
   let d = Date.now()
   let k = 0
   let o = {
@@ -18,8 +20,8 @@ export const register = delay => fn => {
   const loop = async () => {
     const step = {
       geoloc: {
-        lat: o.lat + Math.sin(k * 0.02) * (1 + k * 0.1) * 0.01,
-        lng: o.lng + Math.cos(k * 0.02) * (1 + k * 0.1) * 0.01,
+        lat: o.lat + Math.sin(k * 0.32) * (1 + k * 0.1) * 0.01,
+        lng: o.lng + Math.cos(k * 0.32) * (1 + k * 0.1) * 0.01,
       },
       date: d,
     }
@@ -27,10 +29,10 @@ export const register = delay => fn => {
     fn(step)
 
     k++
-    d += delay * 20
+    d += delay * 200
 
     clearTimeout(loopTimeout)
-    loopTimeout = setTimeout(loop, delay / 3)
+    loopTimeout = setTimeout(loop, delay)
   }
 
   loopTimeout = setTimeout(loop, 1)

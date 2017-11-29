@@ -1,14 +1,9 @@
 import { h, Component } from 'preact'
+import { Trace as Trace_ } from '~/component/Trace'
 import { Link } from '~/component/Link'
 import { runLength, runDuration } from '~/service/runStat'
 import { formatDate, formatLength, formatDuration } from '~/util/format'
-import {
-  primary,
-  secondary,
-  black,
-  grey,
-  white,
-} from '~/component/_abstract/palette'
+import { primary, black, grey, white } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
 export const UserRunList = ({ runs, haveMore, loadMore }) => (
@@ -16,7 +11,7 @@ export const UserRunList = ({ runs, haveMore, loadMore }) => (
     {runs.map(run => (
       <Row key={run.id}>
         <One>
-          <GPSTrace steps={run.steps} />
+          <Trace steps={run.steps} color={primary} />
         </One>
         <Two>
           <Length>
@@ -56,8 +51,13 @@ const Row = styled.div`
     border-bottom-color: transparent;
   }
 `
-const GPSTrace = styled.div``
-const One = styled.div``
+const Trace = styled(Trace_)`
+  width: 90px;
+  height: 90px;
+`
+const One = styled.div`
+  margin-right: 50px;
+`
 const Two = styled.div``
 const Three = styled.div`
   margin-left: auto;
