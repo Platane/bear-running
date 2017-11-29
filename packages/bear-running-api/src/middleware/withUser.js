@@ -11,7 +11,7 @@ export const withUser = () => async (ctx: Context, next) => {
     const data = jwt.verify(token, JWT_PRIVATE_KEY)
 
     ctx.user = data['http://bear-running.com/api/auth']
-    if (ctx.user) ctx.user.id = ctx.user.userId
+    if (ctx.user) ctx.user.id = ctx.user.id || ctx.user.userId
   } catch (e) {
     ctx.throw(401, 'Unauthorized')
   }
