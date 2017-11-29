@@ -34,10 +34,18 @@ export default router => {
       const srctLevel = permissionLevel.indexOf(user.role)
 
       // prevent permission escalation
-      ctx.assert(targetLevel <= setterLevel, 403, 'Forbidden')
+      ctx.assert(
+        targetLevel <= setterLevel,
+        403,
+        'Forbidden, can not escalate permission'
+      )
 
       // prevent from degrading higher level users
-      ctx.assert(srctLevel <= setterLevel, 403, 'Forbidden')
+      ctx.assert(
+        srctLevel <= setterLevel,
+        403,
+        'Forbidden, can not degrade higher user'
+      )
 
       const { value } = await ctx.db.collection('user').findOneAndUpdate(
         {
