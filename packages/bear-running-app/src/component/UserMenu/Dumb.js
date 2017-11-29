@@ -1,5 +1,12 @@
 import { h, Component } from 'preact'
 import { Link } from '~/component/Link'
+import {
+  primary,
+  secondary,
+  black,
+  grey,
+  white,
+} from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
 export const UserMenu = ({ opened, userId, user, toggle, logout, close }) => (
@@ -22,9 +29,11 @@ export const UserMenu = ({ opened, userId, user, toggle, logout, close }) => (
 )
 
 const Portrait = styled.div`
-  background-color: #eee;
-  height: 40px;
-  width: 40px;
+  cursor: pointer;
+  background-color: ${white};
+  height: 44px;
+  width: 44px;
+  border: solid 4px ${secondary};
   border-radius: 50%;
   background-size: cover;
   background-position: center;
@@ -40,19 +49,24 @@ const Panel = styled.div`
   top: 45px;
   right: -10px;
   padding: 10px;
-  background-color: #fff;
+  background-color: ${white};
   display: flex;
   flex-direction: column;
   border-radius: 4px;
-  box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 2px 8px 0px rgba(0, 0, 0, 0.5);
   align-items: stretch;
 `
 const Row = styled.div`
   height: 40px;
   display: flex;
+  color: ${black};
   flex-direction: row;
   align-items: center;
-  border-bottom: solid 1px #eee;
+  border-bottom: solid 1px #ccc;
+
+  & > a {
+    color: ${black};
+  }
 
   &:last-child {
     border-bottom-color: transparent;

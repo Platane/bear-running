@@ -1,18 +1,19 @@
 import { h, Component } from 'preact'
 import { UserMenu } from '~/component/UserMenu'
 import { Link } from '~/component/Link'
+import { primary, white } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
 export const Header = ({ userId, login }) => (
   <Container>
     <Center>
       <Left>
-        <Link href="currentRun">
+        <Link href="currentRun" style={{ color: white }}>
           <Tab>current run</Tab>
         </Link>
 
         {userId && (
-          <Link href={`user/${userId}`}>
+          <Link href={`user/${userId}`} style={{ color: white }}>
             <Tab>my run</Tab>
           </Link>
         )}
@@ -21,8 +22,8 @@ export const Header = ({ userId, login }) => (
       <Right>
         {userId && <UserMenu />}
         {!userId && (
-          <a href="#" onClick={login}>
-            login
+          <a href="#" onClick={login} style={{ color: white }}>
+            <Tab>login</Tab>
           </a>
         )}
       </Right>
@@ -31,7 +32,7 @@ export const Header = ({ userId, login }) => (
 )
 
 const Container = styled.header`
-  background-color: #fff;
+  background-color: ${primary};
   height: 60px;
   display: flex;
   flex-direction: row;
@@ -47,6 +48,7 @@ const Center = styled.div`
   align-items: center;
 `
 const Tab = styled.span`
+  color: ${white};
   margin: 0 10px;
 `
 
