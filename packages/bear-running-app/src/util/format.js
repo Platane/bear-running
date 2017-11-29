@@ -1,7 +1,7 @@
 export const formatLength = x => {
-  const a = Math.round(x / 10000) * 10
-  const d = ((a % 1) * 10).toString()
-  return `${a}.${d}`
+  const a = x / 1000
+  const d = ((a % 1) * 10).toString().slice(0, 1)
+  return `${0 | a}.${d}`
 }
 
 export const formatDate = x => {

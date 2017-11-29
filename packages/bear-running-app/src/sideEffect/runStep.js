@@ -1,56 +1,23 @@
 import { step } from '~/store/action/addRun'
-
-const watchPosition = fn => {
-  try {
-    const watchID = navigator.geolocation.watchPosition(fn)
-    return () => navigator.geolocation.clearWatch(watchID)
-  } catch (err) {
-    console.warn(err)
-    return () => 0
-  }
-}
-
-const getPosition = () =>
-  new Promise((resolve, reject) => {
-    try {
-      navigator.geolocation.getCurrentPosition(resolve, reject)
-    } catch (err) {
-      reject(err)
-    }
-  })
-
-const toStep = ({ coords }) => ({
-  geoloc: { lat: coords.latitude, lng: coords.longitude },
-  date: Date.now(),
-})
-
-const DELAY = 2000
+import { register as basicRegister } from '~/service/geoloc'
+import { register as mockRegister } from '~/service/geoloc/__mock__'
 
 export const init = store => {
-  let loopTimeout = null
-  let watching = false
+  let kill = false
 
-  // called once each Xms
-  const loop = async () => {
-    store.dispatch(step(toStep(await getPosition())))
-
-    clearTimeout(loopTimeout)
-    loopTimeout = setTimeout(loop, DELAY)
-  }
+  const dispatch = x => store.dispatch(step(x))
 
   // called on state update
   const update = () => {
+    const register = true ? mockRegister : basicRegister
+
     const { running } = store.getState().addRun
 
-    if (running && !watching) {
-      watching = true
-      loop()
-    }
+    if (running && !kill) kill = register(2000)(dispatch)
 
-    if (!running && watching) {
-      clearTimeout(loopTimeout)
-      loopTimeout = null
-      watching = false
+    if (!running && kill) {
+      kill()
+      kill = false
     }
   }
 
