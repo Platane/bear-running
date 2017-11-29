@@ -5,7 +5,7 @@ import { connect as createDB } from '~/service/mongo'
 import initRoutes from './routes'
 import { createToken } from '~/util/token'
 
-import { PORT } from '~/config'
+import { PORT, JWT_PRIVATE_KEY } from '~/config'
 
 const logError = err =>
   process.env.NODE_ENV === 'test'
@@ -37,6 +37,7 @@ export const create_ = async () => {
   const server = app.listen(PORT)
 
   // console.log(`server listening on port ${PORT}`)
+  // console.log(`signature key : ${JWT_PRIVATE_KEY}`)
   // console.log(`admin token : ${createToken('admin')()}`)
 
   // kill server

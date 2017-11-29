@@ -44,8 +44,7 @@
     "test":
       "rm -rf src/types && cp -rf ../types src/types && env NODE_ENV=test env PORT=9988 env JWT_PRIVATE_KEY=1234 node -e \"require('babel-register');require('./src/__tests__')\"| tap-spec && rm -rf src/types",
     "deploy:production":
-      "now -e JWT_PRIVATE_KEY=jwt_private_key -e MONGO_PASS=@mongo_pass -e PORT=80 --public -e MONGO_ADDRESS=ds117956.mlab.com -e MONGO_PORT=17956 -e MONGO_DB=dk919djd91jfaod1",
-    "deploy:dev":
-      "now -e JWT_PRIVATE_KEY=jwt_private_key -e MONGO_PASS=@mongo_pass -e PORT=80 --public"
+      "now -e JWT_PRIVATE_KEY=@jwt_private_key -e MONGO_PASS=@mongo_pass -e PORT=80 --public -e MONGO_ADDRESS=ds117956.mlab.com -e MONGO_PORT=17956 -e MONGO_DB=dk919djd91jfaod1",
+    "deploy:dev": "now -e MONGO_PASS=@mongo_pass -e PORT=80 --public"
   }
 }
