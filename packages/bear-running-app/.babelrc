@@ -1,6 +1,7 @@
 {
   "presets": ["flow"],
   "plugins": [
+    "emotion",
     [
       "module-resolver",
       {
@@ -20,6 +21,7 @@
   "env": {
     "production": {
       "plugins": [
+        "emotion",
         [
           "module-resolver",
           {

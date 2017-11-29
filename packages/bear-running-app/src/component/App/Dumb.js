@@ -1,5 +1,6 @@
 import { h, Component } from 'preact'
 import { BasicLayout } from '~/component/_layout/Basic'
+import { AdminLayout } from '~/component/_layout/Admin'
 import { CurrentRun } from '~/component/_page/CurrentRun'
 import { SplashScreen } from '~/component/_page/SplashScreen'
 import { User } from '~/component/_page/User'
@@ -47,9 +48,9 @@ export const App = ({ routerKey, routerParam }) => {
 
     case 'adminUserList':
       return (
-        <BasicLayout>
+        <AdminLayout>
           <AdminApp routerKey={routerKey} routerParam={routerParam} />
-        </BasicLayout>
+        </AdminLayout>
       )
 
     default:
