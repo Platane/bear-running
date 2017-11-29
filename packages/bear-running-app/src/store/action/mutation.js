@@ -7,3 +7,6 @@ export const updateUserRole = (userId, role) => ({
   userId,
   role,
 })
+export const saveRun = () => ({
+  type: 'mutation:saveRun',
+})

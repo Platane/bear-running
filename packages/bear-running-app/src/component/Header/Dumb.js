@@ -5,7 +5,7 @@ export const Header = ({ userId, user, login, logout }) => (
   <header>
     <Link href="currentRun"> current run </Link>
 
-    <Link href="run"> my run </Link>
+    {userId && <Link href={`user/${userId}`}> my run </Link>}
 
     {!userId && (
       <a href="#" onClick={login}>

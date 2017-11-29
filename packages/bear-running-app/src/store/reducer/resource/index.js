@@ -61,6 +61,7 @@ export const reduce = (state: State, action): State => {
           optimisticBackups,
         }
       }
+      break
     }
 
     case 'mutation:success': {
@@ -99,6 +100,7 @@ export const reduce = (state: State, action): State => {
           optimisticBackups,
         }
       }
+      break
     }
   }
 

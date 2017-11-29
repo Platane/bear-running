@@ -15,7 +15,7 @@ export const init = store => {
 
     fetch(selectToken(state), next.path, { query: next.query })
       .then(res => store.dispatch({ type: 'resource:fetched', ...next, res }))
-      .catch(err => console.error(err))
+      .catch(err => store.dispatch({ type: 'resource:error', ...next, err }))
 
     update()
   }

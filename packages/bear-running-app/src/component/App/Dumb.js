@@ -1,10 +1,15 @@
 import { h, Component } from 'preact'
 import { BasicLayout } from '~/component/_layout/Basic'
 import { CurrentRun } from '~/component/_page/CurrentRun'
+import { SplashScreen } from '~/component/_page/SplashScreen'
+import { User } from '~/component/_page/User'
 import { UserList as AdminUserList } from '~/component/_page/Admin/UserList'
 
 const BasicApp = ({ routerKey, routerParam }) => {
   switch (routerKey) {
+    case 'user':
+      return <User userId={routerParam.userId} />
+
     case 'currentRun':
       return <CurrentRun />
     default:
@@ -29,10 +34,11 @@ export const App = ({ routerKey, routerParam }) => {
 
   switch (routerKey) {
     case 'home':
-      return null
+      return <SplashScreen />
 
     case 'currentRun':
     case 'myRuns':
+    case 'user':
       return (
         <BasicLayout>
           <BasicApp routerKey={routerKey} routerParam={routerParam} />
