@@ -10,6 +10,7 @@ test('create a user', async t => {
 
     const user = {
       name: 'tim',
+      team: 'topaze',
       picture: 'tim.jpg',
     }
 
@@ -54,7 +55,7 @@ test('update a user', async t => {
 
     const res = await fetch(`/user/${userId}`, {
       method: 'PUT',
-      body: { name: 'tim bis' },
+      body: { name: 'tim bis', team: 'blue' },
     })
 
     t.pass('request ok')
@@ -64,6 +65,7 @@ test('update a user', async t => {
     t.pass('response is a User')
 
     t.equal(res.name, 'tim bis', 'should have the name updated')
+    t.equal(res.name, 'tim bis', 'should have the team updated')
   })
 
   t.end()

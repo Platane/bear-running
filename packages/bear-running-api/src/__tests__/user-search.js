@@ -11,6 +11,7 @@ test('[bootstrap] create some users', async t => {
       method: 'POST',
       body: {
         name: 'lionel',
+        team: 'topaze',
         picture: 'tim.jpg',
       },
     })
@@ -19,6 +20,7 @@ test('[bootstrap] create some users', async t => {
       method: 'POST',
       body: {
         name: 'giorgio',
+        team: 'blue',
         picture: 'tim.jpg',
       },
     })
@@ -27,6 +29,7 @@ test('[bootstrap] create some users', async t => {
       method: 'POST',
       body: {
         name: 'samuel',
+        team: 'topaze',
         picture: 'tim.jpg',
       },
     })
@@ -83,6 +86,24 @@ test('get all users by name', async t => {
     t.assert(res.items.length >= 1, 'should have 1 items at least')
 
     res.items.forEach(user => user.name.toLowerCase().includes('samuel'))
+
+    t.pass('every item respect the query')
+  })
+
+  t.end()
+})
+
+test('get all users by team', async t => {
+  await wrap(async () => {
+    const fetch = createAdmin()
+
+    const res = await fetch(`/user?team=topaze`)
+
+    t.pass('requests ok')
+
+    t.assert(res.items.length >= 1, 'should have 1 items at least')
+
+    res.items.forEach(user => user.team === 'topaze')
 
     t.pass('every item respect the query')
   })

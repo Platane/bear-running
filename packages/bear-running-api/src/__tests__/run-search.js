@@ -13,6 +13,7 @@ test('[bootstrap] create a user', async t => {
       method: 'POST',
       body: {
         name: 'tim',
+        team: 'topaze',
         picture: 'tim.jpg',
       },
     })
@@ -30,18 +31,21 @@ test('[bootstrap] create some runs', async t => {
     await fetch(`/user/${userId}/run`, {
       method: 'POST',
       body: {
+        weather: 'stormy',
         steps: [{ geoloc: { lat: 0, lng: 0 }, date: 0 }],
       },
     })
     await fetch(`/user/${userId}/run`, {
       method: 'POST',
       body: {
+        weather: 'sunny',
         steps: [{ geoloc: { lat: 0, lng: 0 }, date: 1 }],
       },
     })
     await fetch(`/user/${userId}/run`, {
       method: 'POST',
       body: {
+        weather: 'stormy',
         steps: [{ geoloc: { lat: 0, lng: 0 }, date: 2 }],
       },
     })
@@ -123,6 +127,22 @@ test('get all runs between min and max date', async t => {
     t.equal(res.items.length, 1, 'should return 1 item')
 
     t.equal(res.items[0].steps[0].date, 1, 'date should be between extrema')
+  })
+
+  t.end()
+})
+
+test('get all runs by weather', async t => {
+  await wrap(async () => {
+    const fetch = createAdmin()
+
+    const res = await fetch(`/user/${userId}/run?weather=sunny`)
+
+    t.pass('requests ok')
+
+    t.equal(res.items.length, 1, 'should return at least 1 run')
+
+    res.items.forEach(run => run.weather === 'sunny')
   })
 
   t.end()

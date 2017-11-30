@@ -4,13 +4,15 @@ import { assertType } from '~/util/assertType'
 import koaBody from 'koa-bodyparser'
 import { withUser } from '~/middleware/withUser'
 import type Router from 'koa-router'
-import type { Step } from 'types/Run'
+import type { Weather, Step } from 'types/Run'
 
 type CreateRunInput = {|
   steps: Step[],
+  weather: Weather,
 |}
 type UpdateRunInput = {|
   steps?: Step[],
+  weather?: Weather,
 |}
 
 export default router => {

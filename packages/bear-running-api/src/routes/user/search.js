@@ -2,7 +2,7 @@ import { encodeBase64, decodeBase64 } from '~/util/base64'
 import { assertType } from '~/util/assertType'
 import { parse } from './parse'
 import type Router from 'koa-router'
-import type { Step } from 'types/Run'
+import type { Team } from 'types/User'
 
 type OrderBy = 'date_created' | '-date_created'
 
@@ -10,17 +10,22 @@ export default router => {
   // get runs
   router.get('/user', async (ctx, next) => {
     // parse params
-    const limit = Math.min(ctx.request.query.limit || Infinity, 20)
+    const limit = Math.min(ctx.request.query.limit || Infinity, 10)
 
     let orderBy = assertType(ctx, OrderBy)(
       ctx.request.query.orderBy || '-date_created'
     )
     let offset = 0
+    let team = null
 
     let name = ctx.request.query.name
 
+    if (ctx.request.query.team)
+      team = assertType(ctx, Team)(ctx.request.query.team)
+
     if (ctx.request.query.cursor) {
       const x = JSON.parse(decodeBase64(ctx.request.query.cursor))
+      team = x.team
       name = x.name
       offset = x.offset
       orderBy = x.orderBy
@@ -32,6 +37,8 @@ export default router => {
     const query = {
       deleted: false,
     }
+
+    if (team) query.team = team
 
     if (name)
       query['$text'] = {

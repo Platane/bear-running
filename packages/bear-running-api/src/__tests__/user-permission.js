@@ -12,6 +12,7 @@ test('[bootstrap] create a user', async t => {
       method: 'POST',
       body: {
         name: 'tim',
+        team: 'topaze',
         picture: 'tim.jpg',
       },
     })

@@ -12,6 +12,7 @@ test('[bootstrap] create a user', async t => {
       method: 'POST',
       body: {
         name: 'tim',
+        team: 'topaze',
         picture: 'tim.jpg',
       },
     })
@@ -29,6 +30,7 @@ test('[bootstrap] create a run', async t => {
     const res = await fetch(`/user/${userId}/run`, {
       method: 'POST',
       body: {
+        weather: 'sunny',
         steps: [{ geoloc: { lat: 0, lng: 0 }, date: 0 }],
       },
     })

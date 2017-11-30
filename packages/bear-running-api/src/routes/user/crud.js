@@ -5,13 +5,16 @@ import koaBody from 'koa-bodyparser'
 import { withUser } from '~/middleware/withUser'
 import { parse } from './parse'
 import type Router from 'koa-router'
+import type { Team } from 'types/User'
 
 type CreateUserInput = {|
   name: string,
+  team: Team,
   picture: string,
 |}
 type UpdateUserInput = {|
   name?: string,
+  team?: Team,
   picture?: string,
 |}
 
