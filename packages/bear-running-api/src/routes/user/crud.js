@@ -67,6 +67,8 @@ export default router => {
       { $set: user }
     )
 
+    if (!value) ctx.throw(404, 'User Not Found')
+
     ctx.body = parse({ ...value, ...user })
   })
 
@@ -85,6 +87,8 @@ export default router => {
       },
       { $set: { deleted: true } }
     )
+
+    if (!value) ctx.throw(404, 'User Not Found')
 
     ctx.body = '"ok"'
   })

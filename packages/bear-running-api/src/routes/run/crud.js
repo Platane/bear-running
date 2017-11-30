@@ -90,6 +90,8 @@ export default router => {
         { $set: runInput }
       )
 
+      if (!value) ctx.throw(404, 'Run Not Found')
+
       ctx.body = parse({ ...value, ...runInput })
     }
   )
@@ -112,6 +114,8 @@ export default router => {
       },
       { $set: { deleted: true } }
     )
+
+    if (!value) ctx.throw(404, 'Run Not Found')
 
     ctx.body = '"ok"'
   })

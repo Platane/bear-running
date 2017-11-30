@@ -55,7 +55,7 @@ test('update a user', async t => {
 
     const res = await fetch(`/user/${userId}`, {
       method: 'PUT',
-      body: { name: 'tim bis', team: 'blue' },
+      body: { name: 'tim bis', team: 'citrus' },
     })
 
     t.pass('request ok')

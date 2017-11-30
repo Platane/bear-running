@@ -1,6 +1,7 @@
 import './reset'
 import './error'
 import './user-basicCRUD'
+import './user-error'
 import './user-permission'
 import './user-role'
 import './user-search'

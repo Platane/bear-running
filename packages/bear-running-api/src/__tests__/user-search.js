@@ -20,7 +20,7 @@ test('[bootstrap] create some users', async t => {
       method: 'POST',
       body: {
         name: 'giorgio',
-        team: 'blue',
+        team: 'citrus',
         picture: 'tim.jpg',
       },
     })
@@ -97,13 +97,13 @@ test('get all users by team', async t => {
   await wrap(async () => {
     const fetch = createAdmin()
 
-    const res = await fetch(`/user?team=topaze`)
+    const res = await fetch(`/user?team=citrus`)
 
     t.pass('requests ok')
 
     t.assert(res.items.length >= 1, 'should have 1 items at least')
 
-    res.items.forEach(user => user.team === 'topaze')
+    res.items.forEach(user => user.team === 'citrus')
 
     t.pass('every item respect the query')
   })
