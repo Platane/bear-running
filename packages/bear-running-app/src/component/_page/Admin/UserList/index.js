@@ -1,11 +1,12 @@
 import { connect } from 'preact-redux'
 import { UserList as Dumb } from './Dumb'
-import { updateUserRole, removeUser } from '~/store/action/mutation'
+import { updateUser, updateUserRole, removeUser } from '~/store/action/mutation'
 import { withResource } from '~/component/_abstract/hoc.withResource'
 
 const injectState = connect(null, {
   updateUserRole,
   removeUser,
+  updateUser,
 })
 
 const injectData = withResource({

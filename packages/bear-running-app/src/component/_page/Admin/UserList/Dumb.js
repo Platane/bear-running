@@ -1,15 +1,19 @@
 import { h, Component } from 'preact'
-import { Link } from '~/component/Link'
+import { TeamSwitch } from '~/component/TeamSwitch'
 
 const createChangeRole = (updateUserRole, userId) => e =>
   updateUserRole(userId, e.target.value)
 
 const createRemoveUser = (removeUser, userId) => () => removeUser(userId)
 
+const createUpdateTeam = (updateUser, userId) => team =>
+  updateUser({ team, id: userId })
+
 export const UserList = ({
   users,
   haveMore,
   loadMore,
+  updateUser,
   updateUserRole,
   removeUser,
 }) => (
@@ -36,6 +40,12 @@ export const UserList = ({
             <option value="userManager">user manager</option>
             <option value="admin">admin</option>
           </select>
+        </th>
+        <th>
+          <TeamSwitch
+            team={user.team}
+            onChange={createUpdateTeam(updateUser, user.id)}
+          />
         </th>
         <th>
           <button onClick={createRemoveUser(removeUser, user.id)}>
