@@ -9,6 +9,7 @@ export const reduce = (state: State, action): State => {
 
   switch (action.type) {
     case 'mutation:error':
+    case 'resource:error':
       return [
         {
           key: Math.random()
