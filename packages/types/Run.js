@@ -1,3 +1,5 @@
+export type Weather = 'sunny' | 'rainy' | 'cloudy' | 'stormy'
+
 export type Step = {
   date: number,
   geoloc: {
@@ -8,9 +10,10 @@ export type Step = {
 
 export type Run = {
   id: string,
-  user_id: string,
 
-  // date_start: number,
+  weather: Weather,
+
+  user_id: string,
 
   steps: Step[],
 }
