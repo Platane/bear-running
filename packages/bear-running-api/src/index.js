@@ -1,6 +1,7 @@
 import koa from 'koa'
 import koaRouter from 'koa-router'
 import koaCors from 'koa-cors'
+import corsError from 'koa2-cors-error'
 import { connect as createDB } from '~/service/mongo'
 import initRoutes from './routes'
 import { createToken } from '~/util/token'
@@ -30,6 +31,7 @@ export const create_ = async () => {
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     })
   )
+  app.use(corsError())
   app.use(router.routes())
   app.use(router.allowedMethods())
   app.on('error', logError)

@@ -9,7 +9,11 @@ export const toMongoId = (id: string) => {
     .split('/')
     .slice(-1)[0]
 
-  return ObjectId(_id)
+  try {
+    return ObjectId(_id)
+  } catch (err) {
+    return null
+  }
 }
 
 export const fromMongoId = (...path: string[]) => encodeBase64(path.join('/'))

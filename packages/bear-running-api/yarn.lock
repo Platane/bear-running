@@ -1987,6 +1987,12 @@ koa-router@7.3.0:
     path-to-regexp "^1.1.1"
     urijs "^1.19.0"
 
+koa2-cors-error@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/koa2-cors-error/-/koa2-cors-error-1.0.0.tgz#5f134a6a66a54e74eab96dddfff885424bf73f16"
+  dependencies:
+    statuses "^1.2.1"
+
 koa@2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/koa/-/koa-2.4.1.tgz#d449cfb970a7e9da571f699eda40bb9e32eb1484"
@@ -3024,6 +3030,10 @@ sshpk@^1.7.0:
 "statuses@>= 1.3.1 < 2", statuses@^1.2.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.3.1.tgz#faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e"
+
+statuses@^1.2.1:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.4.0.tgz#bb73d446da2796106efcc1b601a253d6c46bd087"
 
 stream-combiner@~0.0.4:
   version "0.0.4"
