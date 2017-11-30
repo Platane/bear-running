@@ -1,3 +1,8 @@
+export const updateUser = user => ({
+  type: 'mutation:updateUser',
+  user,
+})
+
 export const removeUser = userId => ({
   type: 'mutation:removeUser',
   userId,

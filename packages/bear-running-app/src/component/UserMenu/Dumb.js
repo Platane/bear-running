@@ -1,5 +1,6 @@
 import { h, Component } from 'preact'
 import { Link } from '~/component/Link'
+import { TeamSwitch } from '~/component/TeamSwitch'
 import {
   primary,
   secondary,
@@ -14,6 +15,7 @@ export const UserMenu = ({
   userId,
   role,
   user,
+  changeTeam,
   toggle,
   logout,
   close,
@@ -27,11 +29,19 @@ export const UserMenu = ({
           <b style={{ marginLeft: '6px' }}> {(user && user.name) || '- - -'}</b>
         </Row>
         {['admin', 'userManager'].includes(role) && (
-          <Row style={{ borderTopColor: 'transparent' }}>
+          <Row>
             <b>{role}</b>
           </Row>
         )}
-        <Row>
+        <Row onClick={e => e.stopPropagation()} style={{ marginTop: '10px' }}>
+          team
+          <TeamSwitch
+            onChange={user && (team => changeTeam(user.id, team))}
+            style={{ marginLeft: 'auto' }}
+            team={user && user.team}
+          />
+        </Row>
+        <Row separator>
           <a href="#" onClick={logout}>
             logout
           </a>
@@ -76,7 +86,7 @@ const Row = styled.div`
   color: ${black};
   flex-direction: row;
   align-items: center;
-  border-top: solid 1px #ccc;
+  border-top: solid 1px ${props => (props.separator ? '#ccc' : 'transparent')};
 
   & > a {
     color: ${black};

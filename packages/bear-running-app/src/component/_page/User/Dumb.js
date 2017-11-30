@@ -1,5 +1,6 @@
 import { h, Component } from 'preact'
 import { Link } from '~/component/Link'
+import { TeamSwitch } from '~/component/TeamSwitch'
 import { UserRunList } from '~/component/UserRunList'
 import {
   primary,
@@ -10,9 +11,16 @@ import {
 } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
-export const User = ({ userId, user }) => (
+export const User = ({ changeTeam, userId, user }) => (
   <Container>
-    <Portrait src={user && user.picture} />
+    <PortratWrapper>
+      <Portrait src={user && user.picture} />
+      <Team
+        onChange={user && (team => changeTeam(user.id, team))}
+        team={user && user.team}
+        ticStyle={{ width: '56px', height: '56px' }}
+      />
+    </PortratWrapper>
     <Name>{(user && user.name) || '- - -'}</Name>
 
     <Center>
@@ -21,6 +29,17 @@ export const User = ({ userId, user }) => (
   </Container>
 )
 
+const Team = styled(TeamSwitch)`
+  position: absolute;
+  bottom: -20px;
+  right: -60px;
+  border-radius: 50%;
+  box-shadow: 16px 13px 18px -8px rgba(0, 0, 0, 0.2);
+`
+
+const PortratWrapper = styled.div`
+  position: relative;
+`
 const Portrait = styled.div`
   background-color: ${white};
   height: 150px;

@@ -1,6 +1,7 @@
 import { connect } from 'preact-redux'
 import { UserMenu as Dumb } from './Dumb'
 import { logout } from '~/store/action/auth'
+import { updateUser } from '~/store/action/mutation'
 import { withResource } from '~/component/_abstract/hoc.withResource'
 import injectOpenState from './hoc.state'
 
@@ -11,6 +12,7 @@ const injectState = connect(
   }),
   {
     logout,
+    changeTeam: (id, team) => updateUser({ team, id }),
   }
 )
 

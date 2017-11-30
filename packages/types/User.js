@@ -1,4 +1,4 @@
-export type Team = 'blue' | 'purple' | 'topaze'
+export type Team = 'citrus' | 'opal' | 'jade' | 'topaze'
 
 export type User = {
   id: string,

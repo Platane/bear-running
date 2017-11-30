@@ -1,4 +1,8 @@
-const handlers = [require('./mutation/setRole'), require('./mutation/saveRun')]
+const handlers = [
+  require('./mutation/updateUserRole'),
+  require('./mutation/updateUser'),
+  require('./mutation/saveRun'),
+]
 
 const genKey = () =>
   Math.random()
