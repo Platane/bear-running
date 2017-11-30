@@ -41,7 +41,7 @@ export const isResourceLoaded = (
 
     const id = resourcePath.split('/').slice(-1)[0]
 
-    return (entities[entityName] || {})[id]
+    return !!(entities[entityName] || {})[id]
   } else {
     // multiple entities
 

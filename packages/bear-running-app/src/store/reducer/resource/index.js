@@ -4,6 +4,7 @@ import {
   getResource,
   getQuery,
 } from '~/service/resource'
+import {} from '~/service/resource/util'
 import { set, merge } from '~/util/reduxHelper'
 import { getHandler } from '~/store/middleware/api'
 
@@ -22,7 +23,13 @@ export const reduce = (state: State, action): State => {
     case 'resource:require': {
       const { key, query, path, limit } = action
 
-      if (!isResourceLoaded(state.cache, path, query))
+      // the resource is already available
+      const loaded = isResourceLoaded(state.cache, path, query, limit)
+
+      // the resource is currently being fetched, will be avilable soon
+      const fetching = state.toFetch.some(x => x.path === path)
+
+      if (!loaded && !fetching)
         return {
           ...state,
           toFetch: [
@@ -34,12 +41,34 @@ export const reduce = (state: State, action): State => {
       break
     }
 
-    case 'resource:fetched':
-      return set(
-        state,
-        ['cache'],
-        pushToCache(state.cache, action.path, action.query, action.res)
+    case 'resource:error': {
+      // remove from toFetch
+      const toFetch = state.toFetch.filter(x => x.key !== action.key)
+
+      return {
+        ...state,
+        toFetch,
+      }
+    }
+
+    case 'resource:fetched': {
+      // remove from toFetch
+      const toFetch = state.toFetch.filter(x => x.key !== action.key)
+
+      // push to cache
+      const cache = pushToCache(
+        state.cache,
+        action.path,
+        action.query,
+        action.res
       )
+
+      return {
+        ...state,
+        cache,
+        toFetch,
+      }
+    }
 
     case 'mutation:start': {
       const handler = getHandler(action.action)
