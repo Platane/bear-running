@@ -17,6 +17,7 @@ export const CurrentRun = ({
   saveRun,
   currentRun,
   running,
+  changeCurrentRunWeather,
 }) => (
   <Container>
     {!currentRun && (
@@ -36,6 +37,21 @@ export const CurrentRun = ({
           <LengthLabel> km</LengthLabel>
         </Length>
       </Circle>
+    )}
+
+    {currentRun && (
+      <Weather>
+        <select
+          value={currentRun.weather}
+          onChange={e => changeCurrentRunWeather(e.target.value)}
+        >
+          <option value="sunny">sunny</option>
+          <option value="rainy">rainy</option>
+          <option value="cloudy">cloudy</option>
+          <option value="stormy">stormy</option>
+          <option value="banana">banana</option>
+        </select>
+      </Weather>
     )}
   </Container>
 )
@@ -88,6 +104,11 @@ const Length = styled.div`
   position: absolute;
   bottom: -70px;
   right: -40px;
+`
+const Weather = styled.div`
+  position: absolute;
+  bottom: 70px;
+  left: 40px;
 `
 const LengthValue = styled.span`
   font-size: 32px;

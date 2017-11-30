@@ -8,3 +8,7 @@ export const step = step => ({
   type: 'run:step',
   step,
 })
+export const changeCurrentRunWeather = weather => ({
+  type: 'run:changeWeather',
+  weather,
+})

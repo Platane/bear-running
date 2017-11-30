@@ -10,13 +10,17 @@ export const reduce = (state: State, action): State => {
 
   switch (action.type) {
     case 'run:start':
-      return { currentRun: { steps: [] }, running: true }
+      return { currentRun: { steps: [], weather: 'sunny' }, running: true }
+
+    case 'run:changeWeather':
+      return { currentRun: { ...state.currentRun, weather: action.weather } }
 
     case 'run:step':
       return {
         ...state,
         running: true,
         currentRun: {
+          weather: 'sunny',
           ...(state.currentRun || {}),
           steps: [
             ...((state.currentRun && state.currentRun.steps) || []),
