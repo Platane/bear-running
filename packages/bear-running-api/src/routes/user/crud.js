@@ -9,7 +9,7 @@ import type { Team } from 'types/User'
 
 type CreateUserInput = {|
   name: string,
-  team: Team,
+  team?: Team,
   picture: string,
 |}
 type UpdateUserInput = {|
@@ -37,6 +37,7 @@ export default router => {
 
     const r = {
       ...user,
+      team: user.team || 'topaze',
       deleted: false,
       date_created: Date.now(),
       role: 'user',
