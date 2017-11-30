@@ -14,7 +14,10 @@ export const reduce = (state: State, action): State => {
 
     case 'run:changeWeather':
       if (['running', 'ended'].includes(state.status)) {
-        return { currentRun: { ...state.currentRun, weather: action.weather } }
+        return {
+          ...state,
+          currentRun: { ...state.currentRun, weather: action.weather },
+        }
       }
 
     case 'run:step':

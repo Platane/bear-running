@@ -1,6 +1,6 @@
 import { h, Component } from 'preact'
 
-const DELAY = 6000
+const DELAY = 6000 * 1000
 
 export default C =>
   class Stateful extends Component {
@@ -8,7 +8,8 @@ export default C =>
 
     state = { closed: {} }
 
-    close = () => this.setState({ closed: {} })
+    close = key =>
+      this.setState({ closed: { ...this.state.closed, [key]: true } })
 
     componentWillUnmount() {
       clearTimeout(this._killtimeout)
@@ -18,7 +19,9 @@ export default C =>
 
     render(props, state) {
       const dateLimit = Date.now() - DELAY
-      const toDisplay = this.props.notification.filter(x => x.date > dateLimit)
+      const toDisplay = this.props.notification
+        .filter(x => x.date > dateLimit)
+        .filter(x => !this.state.closed[x.key])
 
       if (toDisplay.length) {
         const delta =
