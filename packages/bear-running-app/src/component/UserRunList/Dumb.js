@@ -3,13 +3,20 @@ import { Trace as Trace_ } from '~/component/Trace'
 import { Link } from '~/component/Link'
 import { runLength, runDuration } from '~/service/runStat'
 import { formatDate, formatLength, formatDuration } from '~/util/format'
-import { primary, black, grey, white } from '~/component/_abstract/palette'
+import {
+  primary,
+  secondary,
+  black,
+  grey,
+  white,
+} from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
 export const UserRunList = ({ runs, haveMore, loadMore }) => (
   <Container>
     {runs.map(run => (
       <Row key={run.id}>
+        <DateLabel>{formatDate(run.steps[0].date)}</DateLabel>
         <One>
           <Trace steps={run.steps} color={primary} />
         </One>
@@ -40,10 +47,11 @@ const Container = styled.div`
 `
 const Row = styled.div`
   width: 100%;
-  height: 120px;
+  height: 140px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  position: relative;
 
   border-bottom: solid 1px rgba(255, 255, 255, 0.2);
 
@@ -56,12 +64,23 @@ const Trace = styled(Trace_)`
   height: 90px;
 `
 const One = styled.div`
-  margin-right: 50px;
+  position: relative;
 `
-const Two = styled.div``
-const Three = styled.div`
-  margin-left: auto;
+const DateLabel = styled.div`
+  position: absolute;
+  bottom: 4px;
+  left: 100px;
+  font-size: 14px;
+  color: ${secondary};
 `
+const Two = styled.div`
+  flex-grow: 1;
+  flex-basis: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+const Three = styled.div``
 const Length = styled.div`
   width: 80px;
   height: 80px;

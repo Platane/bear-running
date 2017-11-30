@@ -7,6 +7,7 @@ import injectOpenState from './hoc.state'
 const injectState = connect(
   state => ({
     userId: state.auth.user && state.auth.user.id,
+    role: state.auth.user && state.auth.user.role,
   }),
   {
     logout,

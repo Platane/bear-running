@@ -4,7 +4,7 @@ import { Link } from '~/component/Link'
 
 const AdminHeader = () => (
   <header>
-    <Link href="admin/user"> users </Link>
+    <Link href="/admin/user"> users </Link>
   </header>
 )
 

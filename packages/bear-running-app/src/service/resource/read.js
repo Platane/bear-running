@@ -48,7 +48,7 @@ export const isResourceLoaded = (
     const key = resourceToKey(resourcePath, resourceQuery)
 
     return queries[key]
-      ? queries[key].items.length >= limit && !queries[key].nextCursor
+      ? queries[key].items.length >= limit || !queries[key].nextCursor
       : false
   }
 }

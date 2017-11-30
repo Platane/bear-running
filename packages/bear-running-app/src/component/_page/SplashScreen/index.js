@@ -3,7 +3,7 @@ import { Link } from '~/component/Link'
 import { primary, secondary, black, grey } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
-export const SplashScreen = () => <Container href="admin/user">0</Container>
+export const SplashScreen = () => <Container href="/admin/user">0</Container>
 
 const Container = styled(Link)`
   position: absolute;

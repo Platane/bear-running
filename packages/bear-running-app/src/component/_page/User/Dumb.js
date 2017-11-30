@@ -22,7 +22,6 @@ export const User = ({ userId, user }) => (
 )
 
 const Portrait = styled.div`
-  cursor: pointer;
   background-color: ${white};
   height: 150px;
   width: 150px;
@@ -47,6 +46,6 @@ const Name = styled.div`
 `
 const Center = styled.div`
   margin-top: 50px;
-  max-width: 400px;
+  max-width: 500px;
   width: 100%;
 `

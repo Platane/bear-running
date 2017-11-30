@@ -21,14 +21,14 @@ export const withResource = (options = {}) => C =>
 
       if (path) {
         const state = this.context.store.getState()
-        const resource = selectResource(x.path, x.query, limit)(state)
-        const loaded = selectResourceLoaded(x.path, x.query, limit)(state)
-        const haveMore = selectResourceHaveMore(x.path, x.query, limit)(state)
+        const resource = selectResource(path, query, limit)(state)
+        const loaded = selectResourceLoaded(path, query, limit)(state)
+        const haveMore = selectResourceHaveMore(path, query, limit)(state)
 
         this.setState({
+          haveMore,
           resource,
           loaded,
-          haveMore,
           limit,
         })
 
@@ -59,6 +59,7 @@ export const withResource = (options = {}) => C =>
         this.setState({
           path: x.path,
           query: x.query,
+          haveMore,
           resource,
           loaded,
           limit,

@@ -9,7 +9,15 @@ import {
 } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
-export const UserMenu = ({ opened, userId, user, toggle, logout, close }) => (
+export const UserMenu = ({
+  opened,
+  userId,
+  role,
+  user,
+  toggle,
+  logout,
+  close,
+}) => (
   <Container onClick={toggle} onBlur={close}>
     <Portrait src={user && user.picture} />
     {opened && (
@@ -18,6 +26,11 @@ export const UserMenu = ({ opened, userId, user, toggle, logout, close }) => (
           signed as
           <b style={{ marginLeft: '6px' }}> {(user && user.name) || '- - -'}</b>
         </Row>
+        {['admin', 'userManager'].includes(role) && (
+          <Row style={{ borderTopColor: 'transparent' }}>
+            <b>{role}</b>
+          </Row>
+        )}
         <Row>
           <a href="#" onClick={logout}>
             logout
@@ -46,6 +59,7 @@ const Container = styled.div`
 const Panel = styled.div`
   width: 190px;
   position: absolute;
+  z-index: 2;
   top: 45px;
   right: -10px;
   padding: 10px;
@@ -62,13 +76,13 @@ const Row = styled.div`
   color: ${black};
   flex-direction: row;
   align-items: center;
-  border-bottom: solid 1px #ccc;
+  border-top: solid 1px #ccc;
 
   & > a {
     color: ${black};
   }
 
-  &:last-child {
-    border-bottom-color: transparent;
+  &:first-child {
+    border-top-color: transparent;
   }
 `
