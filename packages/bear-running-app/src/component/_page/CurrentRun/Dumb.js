@@ -1,5 +1,6 @@
 import { h, Component } from 'preact'
 import { Link } from '~/component/Link'
+import { Spinner } from '~/component/Spinner'
 import { runLength, runDuration } from '~/service/runStat'
 import {
   primary,
@@ -16,7 +17,7 @@ export const CurrentRun = ({
   endRun,
   saveRun,
   currentRun,
-  running,
+  status,
   changeCurrentRunWeather,
 }) => (
   <Container>
@@ -28,10 +29,20 @@ export const CurrentRun = ({
     {currentRun && (
       <Circle
         style={{ cursor: 'pointer' }}
-        onClick={running ? endRun : saveRun}
+        onClick={
+          (status === 'running' && endRun) ||
+          (status === 'ended' && saveRun) ||
+          null
+        }
       >
         <span>{formatDuration(runDuration(currentRun.steps))}</span>
-        <Label>{running ? 'end run' : 'save'}</Label>
+        {status === 'running' && <Label>end run</Label>}
+        {status === 'ended' && <Label>save</Label>}
+        {status === 'saving' && (
+          <Label>
+            <Spinner color={primary} />
+          </Label>
+        )}
         <Length>
           <LengthValue>{formatLength(runLength(currentRun.steps))}</LengthValue>
           <LengthLabel> km</LengthLabel>

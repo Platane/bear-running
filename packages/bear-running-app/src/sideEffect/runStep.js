@@ -11,7 +11,7 @@ export const init = store => {
   const update = () => {
     const register = true ? mockRegister : basicRegister
 
-    const { running } = store.getState().addRun
+    const running = store.getState().addRun.status === 'running'
 
     if (running && !kill) kill = register(2000)(dispatch)
 

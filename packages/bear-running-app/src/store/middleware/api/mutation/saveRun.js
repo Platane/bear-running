@@ -29,10 +29,11 @@ export const update = (cache, action, res) => {
 export const exec = async (store, action) => {
   const state = store.getState()
 
+  const status = state.addRun.status
+  if (status !== 'saving') return Promise.reject(new Error('run is not ended'))
+
   const userId = state.auth.user.id
-
   const run = state.addRun.currentRun
-
   if (!userId || !run) return Promise.reject(new Error('no run to save'))
 
   return fetch(selectToken(state), `user/${userId}/run`, {
