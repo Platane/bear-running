@@ -49,6 +49,10 @@ This can be done with a rule
 
 ```
 function (user, context, callback) {
+     
+  var API_URL = configuration.API_URL || 'https://bear-running-api.now.sh';
+  
+  console.log('user', user );
   
   user.app_metadata = user.app_metadata || {};
   var userId = user.app_metadata.userId;
@@ -63,7 +67,7 @@ function (user, context, callback) {
     // create user,
     // and store the create id as metadata
     request.post({
-      url: configuration.API_URL+'/user',  
+      url: API_URL+'/user',  
       json: u
     },
     function (err, response, body) {
@@ -71,8 +75,9 @@ function (user, context, callback) {
       console.log('create user:', err, body);
       
       if ( err ) return callback(err);
-        
+      
       user.app_metadata.userId = body.id;
+      user.app_metadata.id = body.id;
       user.app_metadata.role = body.role;
       
       auth0.users.updateAppMetadata(user.user_id, user.app_metadata)
@@ -88,9 +93,10 @@ function (user, context, callback) {
     
     // update user in house ( picture and name )
     // push the role in metadata
+    console.log(API_URL+'/user/'+userId, u, configuration.ADMIN_TOKEN);
     request({
       method: 'put',
-      url: configuration.API_URL+'/user/'+userId,  
+      url: API_URL+'/user/'+userId,  
       json: u,
       headers: {
         'Authorization' : 'Bearer '+configuration.ADMIN_TOKEN
@@ -100,8 +106,12 @@ function (user, context, callback) {
       
       console.log('update user:', err, body);
       
-      if ( err ) return callback(err);
-        
+      if ( response && response.statusCode == 404 )
+        return callback(new UnauthorizedError('User banned'));
+    
+      if ( err )
+        return callback(err);
+      
       user.app_metadata.role = body.role;
       
       auth0.users.updateAppMetadata(user.user_id, user.app_metadata)

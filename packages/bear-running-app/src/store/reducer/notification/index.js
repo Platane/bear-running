@@ -25,6 +25,8 @@ export const reduce = (state: State, action): State => {
         },
         ...state,
       ]
+      break
+
     case 'mutation:success':
       switch (action.action.type) {
         case 'mutation:saveRun':
@@ -39,6 +41,25 @@ export const reduce = (state: State, action): State => {
             ...state,
           ]
       }
+      break
+
+    case 'location:changed':
+      if (action.location.hash && action.location.hash.error)
+        return [
+          {
+            key: genKey(),
+            date: Date.now(),
+            type: 'error',
+            content: [
+              action.location.hash.error,
+              action.location.hash.error_description,
+            ]
+              .filter(Boolean)
+              .join(', '),
+          },
+          ...state,
+        ]
+      break
   }
 
   return state
