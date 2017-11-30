@@ -2,7 +2,7 @@ import { h, Component } from 'preact'
 import { NetworkActivityIndicator } from '~/component/NetworkActivityIndicator'
 import { UserMenu } from '~/component/UserMenu'
 import { Link } from '~/component/Link'
-import { primary, white } from '~/component/_abstract/palette'
+import { primary, secondary, white } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
 export const Header = ({ userId, login }) => (
@@ -21,7 +21,7 @@ export const Header = ({ userId, login }) => (
       </Left>
 
       <Right>
-        <NetworkActivityIndicator color={white} />
+        <NetworkActivityIndicator color={secondary} />
         {userId && <UserMenu />}
         {!userId && (
           <a href="#" onClick={login} style={{ color: white }}>
