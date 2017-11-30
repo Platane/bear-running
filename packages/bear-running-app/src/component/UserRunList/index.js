@@ -8,6 +8,7 @@ const injectData = withResource({
   getResource: ({ userId }) => userId && { path: `user/${userId}/run` },
   toProps: ({ resource, loaded, haveMore }) => ({
     runs: resource || [],
+    loading: !loaded,
     loaded,
     haveMore,
   }),

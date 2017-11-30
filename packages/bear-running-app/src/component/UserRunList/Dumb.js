@@ -1,6 +1,7 @@
 import { h, Component } from 'preact'
 import { Trace as Trace_ } from '~/component/Trace'
 import { Link } from '~/component/Link'
+import { Spinner } from '~/component/Spinner'
 import { runLength, runDuration } from '~/service/runStat'
 import { formatDate, formatLength, formatDuration } from '~/util/format'
 import {
@@ -12,34 +13,48 @@ import {
 } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
-export const UserRunList = ({ runs, haveMore, loadMore }) => (
+export const UserRunList = ({ runs, loading, haveMore, loadMore }) => (
   <Container>
-    {runs.map(run => (
-      <Row key={run.id}>
-        <DateLabel>{formatDate(run.steps[0].date)}</DateLabel>
-        <One>
-          <Trace steps={run.steps} color={primary} />
-        </One>
-        <Two>
-          <Length>
-            <LengthValue>{formatLength(runLength(run.steps))}</LengthValue>
-            <LengthLabel> km</LengthLabel>
-          </Length>
-        </Two>
-        <Three>
-          <Durantion>
-            <DurantionLabel>in</DurantionLabel>
-            <DurantionValue>
-              {formatDuration(runDuration(run.steps))}
-            </DurantionValue>
-          </Durantion>
-        </Three>
-      </Row>
-    ))}
-    {haveMore && <button onClick={loadMore}>load more</button>}
+    <List>
+      {runs.map(run => (
+        <Row key={run.id}>
+          <DateLabel>{formatDate(run.steps[0].date)}</DateLabel>
+          <One>
+            <Trace steps={run.steps} color={primary} />
+          </One>
+          <Two>
+            <Length>
+              <LengthValue>{formatLength(runLength(run.steps))}</LengthValue>
+              <LengthLabel> km</LengthLabel>
+            </Length>
+          </Two>
+          <Three>
+            <Durantion>
+              <DurantionLabel>in</DurantionLabel>
+              <DurantionValue>
+                {formatDuration(runDuration(run.steps))}
+              </DurantionValue>
+            </Durantion>
+          </Three>
+        </Row>
+      ))}
+    </List>
+
+    <Footer>
+      {haveMore && !loading && <button onClick={loadMore}>load more</button>}
+      {loading && <Spinner color={white} />}
+    </Footer>
   </Container>
 )
 
+const Footer = styled.div`
+  margin-top: 40px;
+`
+const List = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`
 const Container = styled.div`
   width: 100%;
   display: flex;

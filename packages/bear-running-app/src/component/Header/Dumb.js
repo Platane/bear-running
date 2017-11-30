@@ -1,4 +1,5 @@
 import { h, Component } from 'preact'
+import { NetworkActivityIndicator } from '~/component/NetworkActivityIndicator'
 import { UserMenu } from '~/component/UserMenu'
 import { Link } from '~/component/Link'
 import { primary, white } from '~/component/_abstract/palette'
@@ -20,6 +21,7 @@ export const Header = ({ userId, login }) => (
       </Left>
 
       <Right>
+        <NetworkActivityIndicator color={white} />
         {userId && <UserMenu />}
         {!userId && (
           <a href="#" onClick={login} style={{ color: white }}>

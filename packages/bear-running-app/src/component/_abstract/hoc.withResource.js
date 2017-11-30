@@ -8,7 +8,7 @@ import { requireResource } from '~/store/action/resource'
 
 const toPropsDefault = x => x
 
-const batchSizeDefault = 16
+const batchSizeDefault = 8
 
 export const withResource = (options = {}) => C =>
   class WithResource extends Component {
