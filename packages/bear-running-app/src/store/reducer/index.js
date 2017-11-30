@@ -7,10 +7,15 @@ import {
 import { reduce as router, defaultState as routerDefaultState } from './router'
 import { reduce as addRun, defaultState as addRunDefaultState } from './addRun'
 import { reduce as auth, defaultState as authDefaultState } from './auth'
+import {
+  reduce as notification,
+  defaultState as notificationDefaultState,
+} from './notification'
 
 import type { State } from '../type'
 
 export const reduce = combineReducers({
+  notification,
   resource,
   router,
   auth,
@@ -18,6 +23,7 @@ export const reduce = combineReducers({
 })
 
 export const defaultState: State = {
+  notification: notificationDefaultState,
   resource: resourceDefaultState,
   router: routerDefaultState,
   addRun: addRunDefaultState,

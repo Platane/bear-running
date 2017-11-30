@@ -3,6 +3,7 @@ import { BasicLayout } from '~/component/_layout/Basic'
 import { AdminLayout } from '~/component/_layout/Admin'
 import { CurrentRun } from '~/component/_page/CurrentRun'
 import { SplashScreen } from '~/component/_page/SplashScreen'
+import { ToastZone } from '~/component/ToastZone'
 import { User } from '~/component/_page/User'
 import { UserList as AdminUserList } from '~/component/_page/Admin/UserList'
 
@@ -25,14 +26,7 @@ const AdminApp = ({ routerKey, routerParam }) => {
   }
 }
 
-export const App = ({ routerKey, routerParam }) => {
-  // if (routerKey === 'home') return null
-
-  // if (['myRuns'].includes(routerKey)) return null
-
-  // if (routerKey.includes('admin'))
-  //   return <AdminApp routerKey={routerKey} routerParam={routerParam} />
-
+const App_ = ({ routerKey, routerParam }) => {
   switch (routerKey) {
     case 'home':
       return <SplashScreen />
@@ -57,3 +51,10 @@ export const App = ({ routerKey, routerParam }) => {
       return <article />
   }
 }
+
+export const App = props => (
+  <div style={{ height: '100%' }}>
+    <App_ {...props} />
+    <ToastZone />
+  </div>
+)

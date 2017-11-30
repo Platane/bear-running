@@ -6,7 +6,7 @@ import styled from 'preact-emotion'
 
 export const Footer = () => <Container>made with ❤</Container>
 
-const Container = styled.header`
+const Container = styled.footer`
   background-color: ${black};
   color: ${white};
   height: 28px;
