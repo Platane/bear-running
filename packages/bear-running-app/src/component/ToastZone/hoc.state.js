@@ -1,6 +1,6 @@
 import { h, Component } from 'preact'
 
-const DELAY = 6000 * 1000
+const DELAY = 6000
 
 export default C =>
   class Stateful extends Component {
