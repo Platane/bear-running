@@ -9,6 +9,10 @@ export const Header = ({ userId, login }) => (
   <Container>
     <Center>
       <Left>
+        <Link href="/" style={{ color: white }}>
+          <Tab>home</Tab>
+        </Link>
+
         <Link href="/currentRun" style={{ color: white }}>
           <Tab>current run</Tab>
         </Link>

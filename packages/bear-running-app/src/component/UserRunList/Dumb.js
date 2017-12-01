@@ -34,6 +34,8 @@ export const UserRunList = ({ runs, loading, haveMore, loadMore }) => (
       ))}
     </List>
 
+    {!loading && runs.length === 0 && 'There is nothing here'}
+
     <Footer>
       {haveMore && !loading && <button onClick={loadMore}>load more</button>}
       {loading && <Spinner color={primary} />}

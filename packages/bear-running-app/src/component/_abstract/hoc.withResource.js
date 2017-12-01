@@ -13,7 +13,7 @@ const batchSizeDefault = 8
 
 export const withResource = (options = {}) => C =>
   class WithResource extends Component {
-    state = { path: null, query: null, resource: null, limit: 0 }
+    state = { path: null, query: null, loaded: true, resource: null, limit: 0 }
 
     loadMore = () => {
       const limit = this.state.limit + (options.batchSize || batchSizeDefault)
@@ -55,8 +55,6 @@ export const withResource = (options = {}) => C =>
       ) {
         const limit = options.batchSize || batchSizeDefault
 
-        console.log('props', x.path, x.query)
-
         const state = this.context.store.getState()
         const resource = selectResource(x.path, x.query, limit)(state)
         const loaded = selectResourceLoaded(x.path, x.query, limit)(state)
@@ -80,8 +78,6 @@ export const withResource = (options = {}) => C =>
       const { path, query, limit } = this.state
 
       if (!path) return
-
-      console.log('store', path, query)
 
       const state = this.context.store.getState()
       const resource = selectResource(path, query, limit)(state)

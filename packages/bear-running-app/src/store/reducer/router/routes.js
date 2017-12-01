@@ -2,12 +2,12 @@ import type { Route } from '~/service/router/type'
 
 export const routes: Route[] = [
   { path: '/', key: 'home' },
+  { path: '/intro', key: 'intro' },
 
   { path: '/currentRun', key: 'currentRun' },
-  { path: '/run', key: 'myRuns' },
+  { path: '/user', key: 'userList' },
   { path: '/user/:userId', key: 'user' },
 
   { path: '/admin/user', key: 'adminUserList' },
-  { path: '/admin/user/:userId', key: 'adminUser' },
   // { path: '/run/:runId', key: 'myRun' },
 ]

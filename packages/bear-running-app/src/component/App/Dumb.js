@@ -4,13 +4,21 @@ import { AdminLayout } from '~/component/_layout/Admin'
 import { CurrentRun } from '~/component/_page/CurrentRun'
 import { SplashScreen } from '~/component/_page/SplashScreen'
 import { ToastZone } from '~/component/ToastZone'
-import { User } from '~/component/_page/User'
 import { UserList as AdminUserList } from '~/component/_page/Admin/UserList'
+import { UserList } from '~/component/_page/UserList'
+import { User } from '~/component/_page/User'
+const Home = UserList
 
 const BasicApp = ({ routerKey, routerParam }) => {
   switch (routerKey) {
     case 'user':
       return <User userId={routerParam.userId} />
+
+    case 'home':
+      return <Home />
+
+    case 'userList':
+      return <UserList />
 
     case 'currentRun':
       return <CurrentRun />
@@ -28,12 +36,13 @@ const AdminApp = ({ routerKey, routerParam }) => {
 
 const App_ = ({ routerKey, routerParam }) => {
   switch (routerKey) {
-    case 'home':
+    case 'intro':
       return <SplashScreen />
 
     case 'currentRun':
-    case 'myRuns':
+    case 'userList':
     case 'user':
+    case 'home':
       return (
         <BasicLayout>
           <BasicApp routerKey={routerKey} routerParam={routerParam} />

@@ -40,7 +40,6 @@ const Portrait = styled.div`
   background-color: ${white};
   height: 150px;
   width: 150px;
-  border: solid 10px ${secondary};
   border-radius: 50%;
   background-size: cover;
   background-position: center;
