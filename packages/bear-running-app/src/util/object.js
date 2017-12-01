@@ -1,21 +1,5 @@
 export const isObject = (x: any) => !!(x && typeof x === 'object')
 
-export const flattenObject = (o: any, prefix: string = '') => {
-  if (!isObject(o)) return o
-
-  const copy = {}
-
-  Object.keys(o).forEach(key => {
-    const next = flattenObject(o[key])
-
-    if (!isObject(next)) return (copy[key] = next)
-
-    Object.keys(next).forEach(u => (copy[key + '.' + u] = next[u]))
-  })
-
-  return copy
-}
-
 export const deepEqual = (a: Object, b: Object) =>
   isObject(a)
     ? isObject(b) &&
