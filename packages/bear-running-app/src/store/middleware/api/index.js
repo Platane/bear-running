@@ -2,6 +2,8 @@ const handlers = [
   require('./mutation/updateUserRole'),
   require('./mutation/updateUser'),
   require('./mutation/removeUser'),
+  require('./mutation/updateRun'),
+  require('./mutation/removeRun'),
   require('./mutation/saveRun'),
 ]
 

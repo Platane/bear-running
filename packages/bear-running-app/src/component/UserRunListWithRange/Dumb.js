@@ -17,6 +17,8 @@ export const UserRunListWithRange = ({
   onRangeChange,
   onToggleSorting,
   sortingDescending,
+  changeWeather,
+  removeRun,
 }) => (
   <Container>
     <Filter>
@@ -45,6 +47,8 @@ export const UserRunListWithRange = ({
       loading={loading}
       haveMore={haveMore}
       loadMore={loadMore}
+      removeRun={removeRun}
+      changeWeather={changeWeather}
     />
   </Container>
 )

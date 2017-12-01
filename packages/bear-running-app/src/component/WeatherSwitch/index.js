@@ -26,8 +26,8 @@ export class WeatherSwitch extends Component {
     return (
       <Container className={className} style={style}>
         {!this.state.opened ? (
-          <div onClick={onChange && this.open}>
-            {weathers.includes(weather) ? (
+          <div onClick={onChange && this.open} style={{ color }}>
+            {weathers.includes(weather) && 'banana' !== weather ? (
               <Icon
                 shape={weather}
                 onClick={onChange && this.open}

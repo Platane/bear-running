@@ -7,12 +7,18 @@ import { UserRunListWithRange } from '~/component/UserRunListWithRange'
 import { primary, secondary, black, white } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
-export const User = ({ changeTeam, userId, user }) => (
+export const User = ({
+  changeTeam,
+  changeWeather,
+  removeRun,
+  userId,
+  user,
+}) => (
   <Container>
     <PortratWrapper>
       <Portrait src={user && user.picture} />
       <Team
-        onChange={user && (team => changeTeam(user.id, team))}
+        onChange={user && changeTeam && (team => changeTeam(user.id, team))}
         team={user && user.team}
         ticStyle={{ width: '56px', height: '56px' }}
       />
@@ -20,7 +26,11 @@ export const User = ({ changeTeam, userId, user }) => (
     <Name>{(user && user.name) || <Spinner color={primary} />}</Name>
 
     <Center>
-      <UserRunListWithRange userId={userId} />
+      <UserRunListWithRange
+        userId={userId}
+        changeWeather={changeWeather}
+        removeRun={removeRun}
+      />
     </Center>
   </Container>
 )

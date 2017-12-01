@@ -14,6 +14,7 @@ export const UserRunList = ({
   haveMore,
   loadMore,
   changeWeather,
+  removeRun,
 }) => (
   <Container>
     <List>
@@ -47,6 +48,9 @@ export const UserRunList = ({
               iconStyle={{ width: '50px', height: '50px' }}
             />
           </Four>
+          {removeRun && (
+            <DeleteButton onClick={() => removeRun(run.id)}>×</DeleteButton>
+          )}
         </Row>
       ))}
     </List>
@@ -65,6 +69,13 @@ const Void = styled.div`
   width: 100%;
   text-align: center;
   padding: 60px 0;
+`
+const DeleteButton = styled.div`
+  cursor: pointer;
+  color: ${black};
+  font-size: 20px;
+  text-align: right;
+  flex: 30px 0.2 1;
 `
 
 const Footer = styled.div`
@@ -120,8 +131,8 @@ const Two = styled.div`
   align-items: center;
 `
 const Three = styled.div`
-  flex-grow: 0.4;
-  flex-basis: 40px;
+  flex-grow: 0.6;
+  flex-basis: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
