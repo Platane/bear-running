@@ -13,9 +13,11 @@ export const Header = ({ userId, login }) => (
           <Tab>home</Tab>
         </Link>
 
-        <Link href="/currentRun" style={{ color: white }}>
-          <Tab>current run</Tab>
-        </Link>
+        {userId && (
+          <Link href="/currentRun" style={{ color: white }}>
+            <Tab>current run</Tab>
+          </Link>
+        )}
 
         {userId && (
           <Link href={`/user/${userId}`} style={{ color: white }}>
