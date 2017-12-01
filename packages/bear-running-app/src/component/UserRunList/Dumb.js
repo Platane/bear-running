@@ -2,12 +2,19 @@ import { h, Component } from 'preact'
 import { Trace as Trace_ } from '~/component/Trace'
 import { Link } from '~/component/Link'
 import { Spinner } from '~/component/Spinner'
+import { WeatherSwitch } from '~/component/WeatherSwitch'
 import { runLength, runDuration } from '~/service/runStat'
 import { formatDate, formatLength, formatDuration } from '~/util/format'
 import { primary, secondary, black, white } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
-export const UserRunList = ({ runs, loading, haveMore, loadMore }) => (
+export const UserRunList = ({
+  runs,
+  loading,
+  haveMore,
+  loadMore,
+  changeWeather,
+}) => (
   <Container>
     <List>
       {runs.map(run => (
@@ -30,11 +37,21 @@ export const UserRunList = ({ runs, loading, haveMore, loadMore }) => (
               </DurantionValue>
             </Durantion>
           </Three>
+          <Four>
+            <WeatherSwitch
+              weather={run.weather}
+              onChange={
+                changeWeather && (value => changeWeather(run.id, value))
+              }
+              color={primary}
+              iconStyle={{ width: '50px', height: '50px' }}
+            />
+          </Four>
         </Row>
       ))}
     </List>
 
-    {!loading && runs.length === 0 && 'There is nothing here'}
+    {!loading && runs.length === 0 && <Void>There is nothing here</Void>}
 
     <Footer>
       {haveMore && !loading && <button onClick={loadMore}>load more</button>}
@@ -42,6 +59,13 @@ export const UserRunList = ({ runs, loading, haveMore, loadMore }) => (
     </Footer>
   </Container>
 )
+
+const Void = styled.div`
+  color: ${black};
+  width: 100%;
+  text-align: center;
+  padding: 60px 0;
+`
 
 const Footer = styled.div`
   margin-top: 40px;
@@ -74,6 +98,10 @@ const Trace = styled(Trace_)`
   width: 90px;
   height: 90px;
 `
+const Four = styled.div`
+  position: relative;
+  padding-top: 30px;
+`
 const One = styled.div`
   position: relative;
 `
@@ -91,7 +119,13 @@ const Two = styled.div`
   flex-direction: column;
   align-items: center;
 `
-const Three = styled.div``
+const Three = styled.div`
+  flex-grow: 0.4;
+  flex-basis: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
 const Length = styled.div`
   width: 80px;
   height: 80px;
