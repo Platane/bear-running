@@ -5,6 +5,7 @@ import {
   selectResourceHaveMore,
 } from '~/store/selector/resource'
 import { requireResource } from '~/store/action/resource'
+import { deepEqual } from '~/util/object'
 
 const toPropsDefault = x => x
 
@@ -48,8 +49,13 @@ export const withResource = (options = {}) => C =>
           limit: 0,
         })
 
-      if (x && x.path !== this.state.path) {
+      if (
+        x &&
+        (x.path !== this.state.path || !deepEqual(x.query, this.state.query))
+      ) {
         const limit = options.batchSize || batchSizeDefault
+
+        console.log('props', x.path, x.query)
 
         const state = this.context.store.getState()
         const resource = selectResource(x.path, x.query, limit)(state)
@@ -74,6 +80,8 @@ export const withResource = (options = {}) => C =>
       const { path, query, limit } = this.state
 
       if (!path) return
+
+      console.log('store', path, query)
 
       const state = this.context.store.getState()
       const resource = selectResource(path, query, limit)(state)

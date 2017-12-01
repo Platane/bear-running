@@ -1,14 +1,10 @@
 import { h, Component } from 'preact'
 import { Link } from '~/component/Link'
+import { Spinner } from '~/component/Spinner'
 import { TeamSwitch } from '~/component/TeamSwitch'
 import { UserRunList } from '~/component/UserRunList'
-import {
-  primary,
-  secondary,
-  black,
-  grey,
-  white,
-} from '~/component/_abstract/palette'
+import { UserRunListWithRange } from '~/component/UserRunListWithRange'
+import { primary, secondary, black, white } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
 export const User = ({ changeTeam, userId, user }) => (
@@ -21,10 +17,10 @@ export const User = ({ changeTeam, userId, user }) => (
         ticStyle={{ width: '56px', height: '56px' }}
       />
     </PortratWrapper>
-    <Name>{(user && user.name) || '- - -'}</Name>
+    <Name>{(user && user.name) || <Spinner color={primary} />}</Name>
 
     <Center>
-      <UserRunList userId={userId} />
+      <UserRunListWithRange userId={userId} />
     </Center>
   </Container>
 )

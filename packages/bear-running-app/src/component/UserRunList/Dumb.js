@@ -4,13 +4,7 @@ import { Link } from '~/component/Link'
 import { Spinner } from '~/component/Spinner'
 import { runLength, runDuration } from '~/service/runStat'
 import { formatDate, formatLength, formatDuration } from '~/util/format'
-import {
-  primary,
-  secondary,
-  black,
-  grey,
-  white,
-} from '~/component/_abstract/palette'
+import { primary, secondary, black, white } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
 export const UserRunList = ({ runs, loading, haveMore, loadMore }) => (
@@ -42,7 +36,7 @@ export const UserRunList = ({ runs, loading, haveMore, loadMore }) => (
 
     <Footer>
       {haveMore && !loading && <button onClick={loadMore}>load more</button>}
-      {loading && <Spinner color={white} />}
+      {loading && <Spinner color={primary} />}
     </Footer>
   </Container>
 )
