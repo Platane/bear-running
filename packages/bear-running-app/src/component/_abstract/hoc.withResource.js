@@ -84,6 +84,11 @@ export const withResource = (options = {}) => C =>
       const loaded = selectResourceLoaded(path, query, limit)(state)
       const haveMore = selectResourceHaveMore(path, query, limit)(state)
 
+      // re-ask for load
+      // may happend when element are deleted
+      if (!loaded && state.resource.toFetch.length === 0)
+        this.context.store.dispatch(requireResource(path, query, limit))
+
       if (
         resource !== this.state.resource ||
         loaded !== this.state.loaded ||
