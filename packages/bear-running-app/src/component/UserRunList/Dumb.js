@@ -37,6 +37,12 @@ export const UserRunList = ({
                 {formatDuration(runDuration(run.steps))}
               </DurantionValue>
             </Durantion>
+            <Velocity>
+              {formatLength(
+                runLength(run.steps) / runDuration(run.steps) * 1000 * 60 * 60
+              )}{' '}
+              km / h
+            </Velocity>
           </Three>
           <Four>
             <WeatherSwitch
@@ -136,6 +142,7 @@ const Three = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `
 const Length = styled.div`
   width: 80px;
@@ -165,6 +172,15 @@ const LengthLabel = styled.span`
   font-size: 16px;
   color: ${primary};
 `
+
+const Velocity = styled.div`
+  color: ${white};
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  font-size: 12px;
+`
+
 const Durantion = styled.div``
 const DurantionValue = styled.span`
   color: ${white};
