@@ -30,18 +30,21 @@ test('[bootstrap] create some runs', async t => {
       method: 'POST',
       body: {
         steps: [{ geoloc: { lat: 0, lng: 0 }, date: 0 }],
+        weather: 'sunny',
       },
     })
     await fetch(`/user/${userId}/run`, {
       method: 'POST',
       body: {
         steps: [{ geoloc: { lat: 0, lng: 0 }, date: 1 }],
+        weather: 'sunny',
       },
     })
     await fetch(`/user/${userId}/run`, {
       method: 'POST',
       body: {
         steps: [{ geoloc: { lat: 0, lng: 0 }, date: 2 }],
+        weather: 'sunny',
       },
     })
   })

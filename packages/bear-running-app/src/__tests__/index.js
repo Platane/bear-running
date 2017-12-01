@@ -7,6 +7,7 @@ import test from 'tape'
 import { requireResource } from '~/store/action/resource'
 import { updateUserRole } from '~/store/action/mutation'
 import { selectResource } from '~/store/selector/resource'
+import { selectRequestPending } from '~/store/selector/requestPending'
 import { init as initResourceFetcher } from '~/sideEffect/resourceFetcher'
 import { waitFor } from './util/waitFor'
 
@@ -55,7 +56,7 @@ test('create an app, set user role', async t => {
 
     store.dispatch(updateUserRole(context.userId, 'userManager'))
 
-    await waitFor(store, state => selectUser(state).role === 'userManager')
+    await waitFor(store, state => !selectRequestPending(state))
 
     t.equal(
       selectUser(store.getState()).role,
