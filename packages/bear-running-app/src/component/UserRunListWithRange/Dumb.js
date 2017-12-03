@@ -6,6 +6,7 @@ import { formatDate } from '~/util/format'
 import styled from 'preact-emotion'
 
 export const UserRunListWithRange = ({
+  userId,
   end,
   start,
   min,
@@ -43,6 +44,7 @@ export const UserRunListWithRange = ({
       </Section>
     </Filter>
     <UserRunList
+      userId={userId}
       runs={runs}
       loading={loading}
       haveMore={haveMore}

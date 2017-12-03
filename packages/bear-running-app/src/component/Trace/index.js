@@ -36,7 +36,7 @@ export const Trace = ({ steps, color, ...props }) => {
 
     const max = Math.max(lx, ly)
 
-    if (lx > 0 && ly > 0) {
+    if (lx > 0 || ly > 0) {
       const mx = (max - lx) / 2
       const my = (max - ly) / 2
 

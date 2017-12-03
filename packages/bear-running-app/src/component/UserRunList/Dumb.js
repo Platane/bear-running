@@ -9,6 +9,7 @@ import { primary, secondary, black, white } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
 export const UserRunList = ({
+  userId,
   runs,
   loading,
   haveMore,
@@ -19,7 +20,7 @@ export const UserRunList = ({
   <Container>
     <List>
       {runs.map(run => (
-        <Row key={run.id}>
+        <Row key={run.id} href={`user/${userId}/run/${run.id}`}>
           <DateLabel>{formatDate(run.steps[0].date)}</DateLabel>
           <One>
             <Trace steps={run.steps} color={primary} />
@@ -44,7 +45,12 @@ export const UserRunList = ({
               km / h
             </Velocity>
           </Three>
-          <Four>
+          <Four
+            onClick={e => {
+              e.stopPropagation()
+              e.preventDefault()
+            }}
+          >
             <WeatherSwitch
               weather={run.weather}
               onChange={
@@ -55,7 +61,15 @@ export const UserRunList = ({
             />
           </Four>
           {removeRun && (
-            <DeleteButton onClick={() => removeRun(run.id)}>×</DeleteButton>
+            <DeleteButton
+              onClick={() => {
+                removeRun(run.id)
+                e.stopPropagation()
+                e.preventDefault()
+              }}
+            >
+              ×
+            </DeleteButton>
           )}
         </Row>
       ))}
@@ -97,7 +111,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 `
-const Row = styled.div`
+const Row = styled(Link)`
   width: 100%;
   height: 140px;
   display: flex;
@@ -105,6 +119,7 @@ const Row = styled.div`
   align-items: center;
   position: relative;
 
+  text-decoration: none;
   border-bottom: solid 1px rgba(255, 255, 255, 0.2);
 
   &:last-child {

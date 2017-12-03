@@ -21,3 +21,22 @@ export const runLength = (steps: Step[]) => {
 
 export const runDuration = (steps: Step[]) =>
   steps.length <= 1 ? 0 : steps[steps.length - 1].date - steps[0].date
+
+export const forgeSteps = (
+  length: number,
+  duration: number,
+  start_date?: number
+): Step[] => {
+  start_date = +(start_date || Date.now())
+
+  const a = { lat: 0, lng: 0 }
+
+  const d = length * 180 / Math.PI / EARTH_RADIUS
+
+  const b = { lat: d, lng: 0 }
+
+  return [
+    { geoloc: a, date: start_date },
+    { geoloc: b, date: start_date + +duration },
+  ]
+}
