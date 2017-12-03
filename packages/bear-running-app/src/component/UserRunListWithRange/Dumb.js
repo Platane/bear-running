@@ -1,6 +1,7 @@
 import { h, Component } from 'preact'
 import { UserRunList } from '~/component/UserRunList/Dumb'
 import { InputDateRange } from '~/component/InputDateRange'
+import { Stats } from './Stats'
 import { primary, secondary, black, white } from '~/component/_abstract/palette'
 import { formatDate } from '~/util/format'
 import styled from 'preact-emotion'
@@ -43,6 +44,9 @@ export const UserRunListWithRange = ({
         </Label>
       </Section>
     </Filter>
+    {!loading && (
+      <Stats runs={runs} start={start} end={end} haveMore={haveMore} />
+    )}
     <UserRunList
       userId={userId}
       runs={runs}

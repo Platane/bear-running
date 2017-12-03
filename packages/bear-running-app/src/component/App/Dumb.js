@@ -6,6 +6,7 @@ import { SplashScreen } from '~/component/_page/SplashScreen'
 import { ToastZone } from '~/component/ToastZone'
 import { UserList as AdminUserList } from '~/component/_page/Admin/UserList'
 import { UserList } from '~/component/_page/UserList'
+import { UserStat } from '~/component/_page/UserStat'
 import { User } from '~/component/_page/User'
 import { Run } from '~/component/_page/Run'
 const Home = UserList
@@ -14,6 +15,9 @@ const BasicApp = ({ routerKey, routerParam }) => {
   switch (routerKey) {
     case 'user':
       return <User userId={routerParam.userId} />
+
+    case 'userStat':
+      return <UserStat userId={routerParam.userId} />
 
     case 'run':
       return <Run userId={routerParam.userId} runId={routerParam.runId} />
@@ -45,6 +49,7 @@ const App_ = ({ routerKey, routerParam }) => {
 
     case 'currentRun':
     case 'userList':
+    case 'userStat':
     case 'user':
     case 'home':
     case 'run':
