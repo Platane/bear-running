@@ -1,6 +1,7 @@
 import { h, Component } from 'preact'
 import { Link } from '~/component/Link'
 import { Spinner } from '~/component/Spinner'
+import { Logo as Logo_ } from '~/component/Logo'
 import { runLength, runDuration } from '~/service/runStat'
 import {
   primary,
@@ -23,7 +24,8 @@ export const CurrentRun = ({
   <Container>
     {!currentRun && (
       <Circle style={{ cursor: 'pointer' }} onClick={startRun}>
-        start
+        <Logo color={primary} />
+        <Label>start</Label>
       </Circle>
     )}
     {currentRun && (
@@ -98,6 +100,11 @@ const Label = styled.div`
   position: absolute;
   bottom: 30px;
   font-size: 26px;
+`
+const Logo = styled(Logo_)`
+  width: 120px;
+  height: 120px;
+  margin-bottom: 40px;
 `
 
 const Length = styled.div`
