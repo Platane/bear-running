@@ -8,6 +8,7 @@
     "preact": "8.2.6",
     "preact-emotion": "8.0.11",
     "preact-redux": "2.0.3",
+    "prop-types": " 15.6.0",
     "redux": "3.7.2",
     "reselect": "3.0.1",
     "styled-jsx": "2.2.0"
@@ -49,12 +50,9 @@
   },
   "scripts": {
     "test": "./script/prepare-test.sh && npm run test:exec",
-    "test:exec":
-      "env NODE_ENV=test env PORT=9988 env API_URL=http://localhost:9988 node -e \"global.fetch=require('node-fetch');require('babel-register');require('./src/__tests__')\"| tap-spec",
-    "start":
-      "webpack-dev-server --config ./script/webpack.config.js --inline --devtool source-map -d",
-    "build":
-      "rm -rf dist && NODE_ENV=production webpack --config ./script/webpack.config.js && node ./script/writeIndexHtml.js",
+    "test:exec": "env NODE_ENV=test env PORT=9988 env API_URL=http://localhost:9988 node -e \"global.fetch=require('node-fetch');require('babel-register');require('./src/__tests__')\"| tap-spec",
+    "start": "webpack-dev-server --config ./script/webpack.config.js --inline --devtool source-map -d",
+    "build": "rm -rf dist && NODE_ENV=production webpack --config ./script/webpack.config.js && node ./script/writeIndexHtml.js",
     "deploy": "now --public --docker"
   }
 }

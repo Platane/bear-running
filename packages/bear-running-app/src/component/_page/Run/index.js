@@ -9,7 +9,7 @@ export const Run = compose(
   // inject data fetched
   withResource({
     getResource: ({ userId, runId }) =>
-      (userId, runId) && { path: `user/${userId}/run/${runId}` },
+      userId && runId && { path: `user/${userId}/run/${runId}` },
     toProps: ({ resource }) => ({
       run: resource,
     }),

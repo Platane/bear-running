@@ -70,6 +70,6 @@ const Name = styled.div`
 `
 const Center = styled.div`
   margin-top: 50px;
-  max-width: 500px;
+  max-width: 540px;
   width: 100%;
 `

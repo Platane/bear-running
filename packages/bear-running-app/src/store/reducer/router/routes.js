@@ -7,7 +7,7 @@ export const routes: Route[] = [
   { path: '/currentRun', key: 'currentRun' },
   { path: '/user', key: 'userList' },
   { path: '/user/:userId', key: 'user' },
-  { path: '/user/:userId/stat', key: 'userStat' },
+  { path: '/user/:userId/stats', key: 'userStats' },
   { path: '/user/:userId/run/:runId', key: 'run' },
 
   { path: '/admin/user', key: 'adminUserList' },

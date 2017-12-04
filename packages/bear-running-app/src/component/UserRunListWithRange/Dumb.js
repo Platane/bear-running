@@ -2,6 +2,7 @@ import { h, Component } from 'preact'
 import { UserRunList } from '~/component/UserRunList/Dumb'
 import { InputDateRange } from '~/component/InputDateRange'
 import { Stats } from './Stats'
+import { Link } from '~/component/Link'
 import { primary, secondary, black, white } from '~/component/_abstract/palette'
 import { formatDate } from '~/util/format'
 import styled from 'preact-emotion'
@@ -45,7 +46,10 @@ export const UserRunListWithRange = ({
       </Section>
     </Filter>
     {!loading && (
-      <Stats runs={runs} start={start} end={end} haveMore={haveMore} />
+      <StatsSection>
+        <Stats runs={runs} start={start} end={end} haveMore={haveMore} />
+        <MoreStats href={`/user/${userId}/stats`}>more stats</MoreStats>
+      </StatsSection>
     )}
     <UserRunList
       userId={userId}
@@ -59,12 +63,20 @@ export const UserRunListWithRange = ({
   </Container>
 )
 
+const MoreStats = styled(Link)`
+  color: ${primary};
+  font-size: 0.8em;
+`
+
 const Label = styled.div`
   color: ${black};
 `
 const Filter = styled.div`
   padding: 10px;
   overflow: hidden;
+`
+const StatsSection = styled.div`
+  margin: 30px 0;
 `
 const Section = styled.div`
   margin-bottom: 30px;

@@ -18,6 +18,6 @@ const Container = styled.div`
   align-items: center;
 `
 const Center = styled.div`
-  max-width: 500px;
+  max-width: 540px;
   width: 100%;
 `
