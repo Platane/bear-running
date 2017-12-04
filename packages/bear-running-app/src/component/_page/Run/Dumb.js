@@ -29,7 +29,9 @@ class StepForger extends Component {
   }
 
   onSubmit = () =>
-    this.props.onSubmit(forgeSteps(this.state.length, this.state.duration))
+    this.props.onSubmit(
+      forgeSteps(this.state.length, this.state.duration, this.props.date_start)
+    )
 
   render() {
     return (
@@ -64,6 +66,7 @@ export const Run = ({
       {run &&
         changeSteps && (
           <StepForger
+            date_start={run.steps[0] && run.steps[0].date}
             length={runLength(run.steps)}
             duration={runDuration(run.steps)}
             onSubmit={steps => changeSteps(runId, steps)}

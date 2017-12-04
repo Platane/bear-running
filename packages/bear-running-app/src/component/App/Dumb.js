@@ -11,6 +11,8 @@ import { User } from '~/component/_page/User'
 import { Run } from '~/component/_page/Run'
 const Home = UserList
 
+const now = Date.now() + 60 * 60 * 1000
+
 const BasicApp = ({ routerKey, routerParam }) => {
   switch (routerKey) {
     case 'user':
@@ -20,8 +22,8 @@ const BasicApp = ({ routerKey, routerParam }) => {
       return (
         <UserStats
           userId={routerParam.userId}
-          start={Date.now() - 60 * 60 * 1000 * 24 * 7}
-          end={Date.now()}
+          start={now - 60 * 60 * 1000 * 24 * 7}
+          end={now}
         />
       )
 
