@@ -62,7 +62,7 @@ export const UserRunList = ({
           </Four>
           {removeRun && (
             <DeleteButton
-              onClick={() => {
+              onClick={e => {
                 removeRun(run.id)
                 e.stopPropagation()
                 e.preventDefault()
