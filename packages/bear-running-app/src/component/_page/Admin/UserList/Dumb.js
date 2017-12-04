@@ -10,6 +10,7 @@ const createUpdateTeam = (updateUser, userId) => team =>
   updateUser({ team, id: userId })
 
 export const UserList = ({
+  loading,
   users,
   haveMore,
   loadMore,
@@ -54,6 +55,6 @@ export const UserList = ({
         </th>
       </tr>
     ))}
-    {haveMore && <button onClick={loadMore}>load more</button>}
+    {haveMore && !loading && <button onClick={loadMore}>load more</button>}
   </table>
 )

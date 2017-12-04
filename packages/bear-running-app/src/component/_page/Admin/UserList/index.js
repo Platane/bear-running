@@ -15,6 +15,7 @@ const injectData = withResource({
     users: resource || [],
     loaded,
     haveMore,
+    loading: !loaded,
   }),
 })
 

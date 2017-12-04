@@ -5,16 +5,9 @@ import { Footer } from '~/component/Footer'
 import { grey } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
-const AdminHeader = () => (
-  <header>
-    <Link href="/admin/user"> users </Link>
-  </header>
-)
-
 export const AdminLayout = ({ children }) => (
   <Container>
     <Header />
-    <AdminHeader />
     <Content>{children}</Content>
     <Footer />
   </Container>

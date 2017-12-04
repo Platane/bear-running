@@ -5,7 +5,7 @@ import { Link } from '~/component/Link'
 import { primary, secondary, white } from '~/component/_abstract/palette'
 import styled from 'preact-emotion'
 
-export const Header = ({ userId, login }) => (
+export const Header = ({ userId, role, login }) => (
   <Container>
     <Center>
       <Left>
@@ -22,6 +22,12 @@ export const Header = ({ userId, login }) => (
         {userId && (
           <Link href={`/user/${userId}`} style={{ color: white }}>
             <Tab>my run</Tab>
+          </Link>
+        )}
+
+        {['admin', 'userManager'].includes(role) && (
+          <Link href={`/admin/user`} style={{ color: white }}>
+            <Tab>users permissions</Tab>
           </Link>
         )}
       </Left>
@@ -58,6 +64,7 @@ const Center = styled.div`
 const Tab = styled.span`
   color: ${white};
   margin: 0 10px;
+  text-align: center;
 `
 
 const Left = styled.div`
